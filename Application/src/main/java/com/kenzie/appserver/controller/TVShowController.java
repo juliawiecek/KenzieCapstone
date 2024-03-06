@@ -1,5 +1,6 @@
 package com.kenzie.appserver.controller;
 
+import com.kenzie.capstone.service.client.TVShowLambdaServiceClient;
 import com.kenzie.capstone.service.model.EpisodeResponse;
 import com.kenzie.capstone.service.model.ShowInfoResponse;
 import com.kenzie.capstone.service.model.TVShowReponse;
@@ -15,32 +16,35 @@ import java.util.List;
 @RequestMapping("")
 public class TVShowController {
     // put in service
-    public TVShowController(){}
+    TVShowLambdaServiceClient tvShowLambdaServiceClient;
+    public TVShowController(TVShowLambdaServiceClient tvShowLambdaServiceClient){this.tvShowLambdaServiceClient = tvShowLambdaServiceClient;}
     @GetMapping
-    public ResponseEntity<List<TVShowReponse>> getPopularShows(){
-        List<TVShowReponse> popularShows = new ArrayList<>();
+    public ResponseEntity<String> getPopularShows(){
+        String popularShows = tvShowLambdaServiceClient.getPopularShows();
         if (popularShows == null || popularShows.isEmpty()){
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(popularShows);
     }
     @GetMapping
-    public ResponseEntity<TVShowReponse> getShow(){
-        TVShowReponse tvShowReponse = new TVShowReponse();
-        // call service
-        // check for problems
-        return ResponseEntity.ok(tvShowReponse);}
-    @GetMapping
-    public ResponseEntity<ShowInfoResponse> getShowInfo(){
-        ShowInfoResponse showInfoResponse = new ShowInfoResponse();
-        // call service
-        // check for problems
-        return ResponseEntity.ok(showInfoResponse);}
-    @GetMapping
-    public ResponseEntity<List<EpisodeResponse>> getshowEpisodeList(){
-        List<EpisodeResponse> episodeResponses = new ArrayList<>();
-        if (episodeResponses == null || episodeResponses.isEmpty()){
+    public ResponseEntity<String> getShow(){
+        String show = tvShowLambdaServiceClient.getShow("");
+        if (show == null || show.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(episodeResponses);}
+        return ResponseEntity.ok(show);}
+    @GetMapping
+    public ResponseEntity<String> getShowInfo(){
+       String showinfo = tvShowLambdaServiceClient.getShowInfo("");
+        if (showinfo == null || showinfo.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(showinfo);}
+    @GetMapping
+    public ResponseEntity<String> getshowEpisodeList(){
+        String episodeList = tvShowLambdaServiceClient.getShowEpisodeList("");
+        if (episodeList == null || episodeList.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(episodeList);}
 }
