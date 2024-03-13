@@ -34,7 +34,7 @@ public class CommentController {
     }
 
     // Endpoint for retrieving the top three comments
-    @GetMapping("/top-three") // Adjust if your test plan specifies a different endpoint
+    @GetMapping("/top-three")
     public ResponseEntity<List<CommentResponse>> getTopThreeComments() {
         List<CommentResponse> responses = commentService.getTopThreeComments();
         return ResponseEntity.ok(responses);
