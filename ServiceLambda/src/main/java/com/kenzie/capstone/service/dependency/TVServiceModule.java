@@ -2,7 +2,7 @@ package com.kenzie.capstone.service.dependency;
 
 
 import com.kenzie.capstone.service.dao.TVShowDao;
-import com.kenzie.capstone.service.service.TVShowService;
+import com.kenzie.capstone.service.TVShowService;
 import dagger.Module;
 import dagger.Provides;
 

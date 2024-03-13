@@ -1,4 +1,4 @@
-package com.kenzie.capstone.service.service;
+package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.TVShowDao;
 import com.kenzie.capstone.service.model.EpisodeResponse;
