@@ -72,7 +72,7 @@ public class CommentService {
 //            commentRepository.save(updatedRecord);
 //            return mapToCommentResponse(updatedRecord);
 //        }
-//        return null; //We going to throw fe custom exceptions
+//        return null; //going to throw fe custom exceptions
 //    }
 
     public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
