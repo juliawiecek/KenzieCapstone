@@ -74,8 +74,7 @@ public class TVShowDao {
 
     public String getShowInfoFromAPI(String id) {
         String endpoint = "/shows/";
-        String embed = "?embed[]=episodes&embed[]=images";
-        String url = api + endpoint + id + embed;
+        String url = api + endpoint + id;
 
         HttpClient client = HttpClient.newHttpClient();
         URI uri = URI.create(url);
@@ -99,8 +98,62 @@ public class TVShowDao {
         }
     }
 
-    public String getShowEpisodeListFromAPI(String id) {
+    public String getShowImagesFromAPI(String id) {
         String endpoint = "/shows/";
+        String images = "/images";
+        String url = api + endpoint + id + images;
+
+        HttpClient client = HttpClient.newHttpClient();
+        URI uri = URI.create(url);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int statusCode = httpResponse.statusCode();
+            if (statusCode == 200) {
+                return httpResponse.body();
+            } else {
+                throw new ApiGatewayException("GET request failed: " + statusCode + " status code received"
+                        + "\n body: " + httpResponse.body());
+            }
+        } catch (IOException | InterruptedException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String getShowSeasonsFromAPI(String id) {
+        String endpoint = "/shows/";
+        String seasons = "/seasons";
+        String url = api + endpoint + id + seasons;
+
+        HttpClient client = HttpClient.newHttpClient();
+        URI uri = URI.create(url);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int statusCode = httpResponse.statusCode();
+            if (statusCode == 200) {
+                return httpResponse.body();
+            } else {
+                throw new ApiGatewayException("GET request failed: " + statusCode + " status code received"
+                        + "\n body: " + httpResponse.body());
+            }
+        } catch (IOException | InterruptedException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String getShowEpisodesForSeasonFromAPI(String id) {
+        String endpoint = "/seasons/";
         String episodeList = "/episodes";
         String url = api + endpoint + id + episodeList;
 
