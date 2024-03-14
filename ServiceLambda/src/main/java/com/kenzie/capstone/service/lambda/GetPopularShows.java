@@ -6,18 +6,17 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
-import com.kenzie.capstone.service.dependency.ServiceComponent;
+import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class GetPopularShows implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-    static final Logger log = LogManager.getLogger();
+    static final Logger log = (Logger) LogManager.getLogger();
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
         GsonBuilder builder = new GsonBuilder();
@@ -25,8 +24,8 @@ public class GetPopularShows implements RequestHandler<APIGatewayProxyRequestEve
 
         log.info(gson.toJson(input));
 
-        ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        TVShowService tvShowService = serviceComponent.provideLambdaService();
+        TVShowServiceComponent tvShowServiceComponent = (TVShowServiceComponent) DaggerServiceComponent.create();
+        TVShowService tvShowService = tvShowServiceComponent.provideTVShowService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -53,6 +52,5 @@ public class GetPopularShows implements RequestHandler<APIGatewayProxyRequestEve
                     .withStatusCode(400)
                     .withBody(gson.toJson(e.getMessage()));
         }
-        return null;
     }
 }

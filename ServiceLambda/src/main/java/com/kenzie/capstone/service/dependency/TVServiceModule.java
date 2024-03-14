@@ -11,7 +11,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Module(
-        includes = DaoModule.class
+        includes = TVShowDaoModule.class
 )
 public class TVServiceModule {
 
