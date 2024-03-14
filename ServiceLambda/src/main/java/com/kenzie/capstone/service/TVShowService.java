@@ -28,8 +28,14 @@ public class TVShowService {
         String showinfo = tvShowDao.getShowInfoFromAPI(id);
         return new ShowInfoResponse();
     }
-//    public List<EpisodeResponse> getShowEpisodeList(String id){
-//        String episodeList = tvShowDao.getShowEpisodeListFromAPI(id);
-//        return Collections.emptyList();
-//    }
+    public List<EpisodeResponse> getShowEpisodesForSeason(String id){
+        String episodeList = tvShowDao.getShowEpisodesForSeasonFromAPI(id);
+        return Collections.emptyList();
+    }
+    public void getShowImages(String id){
+        String showImages = tvShowDao.getShowImagesFromAPI(id);
+    }
+    public void getShowSeasons(String id){
+        String showSeasons = tvShowDao.getShowSeasonsFromAPI(id);
+    }
 }
