@@ -1,5 +1,4 @@
 package com.kenzie.capstone.service.client;
-package com.kenzie.capstone.service.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.dao.TVShowDao;
