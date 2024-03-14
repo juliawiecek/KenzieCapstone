@@ -13,15 +13,7 @@ public class ShowInfoResponse {
     private List<String> genres;
     @JsonProperty("summary")
     private String summary;
-    @JsonProperty("id")
-    private String id;
-    @JsonProperty("type")
-    private String type;
-    @JsonProperty("main")
-    private boolean main;
-    // Ask Julia about this
-    @JsonProperty("resolutions")
-    private String resolutions;
+
 
     public String getName() {
         return name;
