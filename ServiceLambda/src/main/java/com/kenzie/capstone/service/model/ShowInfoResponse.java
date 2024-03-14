@@ -11,6 +11,10 @@ public class ShowInfoResponse {
     private String name;
     @JsonProperty("genres")
     private List<String> genres;
+    @JsonProperty("rating")
+    private Double rating;
+    @JsonProperty("image")
+    private String image;
     @JsonProperty("summary")
     private String summary;
 
@@ -37,5 +41,21 @@ public class ShowInfoResponse {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
