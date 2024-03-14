@@ -7,9 +7,12 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaService;
+import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -23,7 +26,33 @@ public class GetPopularShows implements RequestHandler<APIGatewayProxyRequestEve
         log.info(gson.toJson(input));
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        LambdaService lambdaService
+        TVShowService tvShowService = serviceComponent.provideLambdaService();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
+                .withHeaders(headers);
+
+        String name = input.getPathParameters().get("name");
+
+        if (name == null || name.length() == 0){
+            return response
+                    .withStatusCode(400)
+                    .withBody("name is invalid");
+        }
+
+        try {
+            // need to put service call here
+            String output = gson.toJson("");
+
+            return response
+                    .withStatusCode(200)
+                    .withBody(output);
+        } catch (Exception e){
+            return response
+                    .withStatusCode(400)
+                    .withBody(gson.toJson(e.getMessage()));
+        }
         return null;
     }
 }
