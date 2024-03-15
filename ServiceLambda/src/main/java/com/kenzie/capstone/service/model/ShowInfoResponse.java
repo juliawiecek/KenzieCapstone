@@ -14,7 +14,7 @@ public class ShowInfoResponse {
     @JsonProperty("rating")
     private Double rating;
     @JsonProperty("image")
-    private String image;
+    private List<String> image;
     @JsonProperty("summary")
     private String summary;
 
@@ -51,11 +51,11 @@ public class ShowInfoResponse {
         this.rating = rating;
     }
 
-    public String getImage() {
+    public List<String> getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(List<String> image) {
         this.image = image;
     }
 }
