@@ -2,6 +2,7 @@ package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.TVShowDao;
 import com.kenzie.capstone.service.model.EpisodeResponse;
+import com.kenzie.capstone.service.model.ImageResponse;
 import com.kenzie.capstone.service.model.ShowInfoResponse;
 import com.kenzie.capstone.service.model.TVShowReponse;
 
@@ -15,14 +16,14 @@ public class TVShowService {
     public TVShowService(TVShowDao tvShowDao){
         this.tvShowDao = tvShowDao;
     }
-    public List<TVShowReponse> getPopularShows(){
+    public List<ShowInfoResponse> getPopularShows(){
         String popularShows = tvShowDao.getPopularShowsFromAPI();
         // Convert to response, check problems, return response. Same for all methods
         return Collections.emptyList();
     }
-    public TVShowReponse getShow(String query) {
+    public ShowInfoResponse getShow(String query) {
         String requestedShow = tvShowDao.getShowFromAPI(query);
-        return new TVShowReponse();
+        return new ShowInfoResponse();
     }
     public ShowInfoResponse getShowInfo(String id) {
         String showinfo = tvShowDao.getShowInfoFromAPI(id);
@@ -32,10 +33,12 @@ public class TVShowService {
         String episodeList = tvShowDao.getShowEpisodesForSeasonFromAPI(id);
         return Collections.emptyList();
     }
-    public void getShowImages(String id){
+    public ImageResponse getShowImages(String id){
         String showImages = tvShowDao.getShowImagesFromAPI(id);
+        return new ImageResponse();
     }
-    public void getShowSeasons(String id){
+    public EpisodeResponse getShowSeasons(String id){
         String showSeasons = tvShowDao.getShowSeasonsFromAPI(id);
+        return new EpisodeResponse();
     }
 }
