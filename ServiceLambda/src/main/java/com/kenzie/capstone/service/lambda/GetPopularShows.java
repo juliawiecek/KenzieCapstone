@@ -9,9 +9,11 @@ import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
+import com.kenzie.capstone.service.model.ShowInfoResponse;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -41,8 +43,9 @@ public class GetPopularShows implements RequestHandler<APIGatewayProxyRequestEve
         }
 
         try {
-            // need to put service call here
-            String output = gson.toJson("");
+
+            List<ShowInfoResponse> showInfoResponse = tvShowService.getPopularShows();
+            String output = gson.toJson(showInfoResponse);
 
             return response
                     .withStatusCode(200)

@@ -4,7 +4,7 @@ import com.kenzie.capstone.service.dao.TVShowDao;
 import com.kenzie.capstone.service.model.EpisodeResponse;
 import com.kenzie.capstone.service.model.ImageResponse;
 import com.kenzie.capstone.service.model.ShowInfoResponse;
-import com.kenzie.capstone.service.model.TVShowReponse;
+
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -21,8 +21,8 @@ public class TVShowService {
         // Convert to response, check problems, return response. Same for all methods
         return Collections.emptyList();
     }
-    public ShowInfoResponse getShow(String query) {
-        String requestedShow = tvShowDao.getShowFromAPI(query);
+    public ShowInfoResponse getShow(String id) {
+        String requestedShow = tvShowDao.getShowFromAPI(id);
         return new ShowInfoResponse();
     }
     public ShowInfoResponse getShowInfo(String id) {

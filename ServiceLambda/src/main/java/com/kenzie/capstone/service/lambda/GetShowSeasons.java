@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
+import com.kenzie.capstone.service.model.EpisodeResponse;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
@@ -32,17 +33,18 @@ public class GetShowSeasons implements RequestHandler<APIGatewayProxyRequestEven
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        String name = input.getPathParameters().get("name");
+        String id = input.getPathParameters().get("id");
 
-        if (name == null || name.length() == 0){
+        if (id == null || id.length() == 0){
             return response
                     .withStatusCode(400)
-                    .withBody("name is invalid");
+                    .withBody("id is invalid");
         }
 
         try {
             // need to put service call here
-            String output = gson.toJson("");
+            EpisodeResponse episodeResponse = tvShowService.getShowSeasons(id);
+            String output = gson.toJson(episodeResponse);
 
             return response
                     .withStatusCode(200)
