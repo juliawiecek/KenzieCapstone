@@ -62,18 +62,7 @@ public class CommentService {
         return true;
     }
 
-//    public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
-//        Optional<CommentRecord> existingRecord = commentRepository.findById(commentId);
-//        if (existingRecord.isPresent()) {
-//            CommentRecord updatedRecord = existingRecord.get();
-//            updatedRecord.setTitle(request.getTitle());
-//            updatedRecord.setContents(request.getContents());
-//            // make sure timestamp and UserID do not change during an update
-//            commentRepository.save(updatedRecord);
-//            return mapToCommentResponse(updatedRecord);
-//        }
-//        return null; //going to throw fe custom exceptions
-//    }
+
 
     public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
         // exception handling if the comment to update does not exist.
