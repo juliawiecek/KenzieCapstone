@@ -6,12 +6,12 @@ Resources:
         - "AttributeName": "CommentId"
           "AttributeType": "S"
         - "AttributeName": "UserId"
-          "AttributeType":  "S"
+          "AttributeType": "S"
       "KeySchema":
         - "AttributeName": "CommentId"
           "KeyType": "HASH"
         - "AttributeName": "UserId"
-          "KeyType": "Range"
+          "KeyType": "RANGE"
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: false
       BillingMode: PAY_PER_REQUEST
