@@ -1,0 +1,18 @@
+Resources:
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      "AttributeDefinitions":
+        - "AttributeName": "CommentId"
+          "AttributeType": "S"
+        - "AttributeName": "UserId"
+          "AttributeType":  "S"
+      "KeySchema":
+        - "AttributeName": "CommentId"
+          "KeyType": "HASH"
+        - "AttributeName": "UserId"
+          "KeyType": "Range"
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: false
+      BillingMode: PAY_PER_REQUEST
+      TableName: "CommentTable"
