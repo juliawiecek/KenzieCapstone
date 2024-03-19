@@ -20,7 +20,7 @@ public class TVShowService {
     }
     public List<ShowInfoResponse> getPopularShows(){
         String popularShows = tvShowDao.getPopularShowsFromAPI();
-        // Convert to response, check problems, return response. Same for all methods
+//        if (!popularShows.isEmpty())
         return jsonStringToResponseConverter.convertToShowInfoListResponse(popularShows);
     }
     public ShowInfoResponse getShow(String id) {

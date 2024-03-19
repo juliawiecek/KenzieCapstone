@@ -20,7 +20,7 @@ public class JsonStringToResponseConverter {
                 ShowInfoResponse showInfoResponse = gson.fromJson(body, ShowInfoResponse.class);
                 return showInfoResponse;
             } catch (Exception e) {
-                throw new ApiGatewayException("Response could not be deserialized");
+                throw new ApiGatewayException("ShowInfoResponse could not be deserialized");
             }
         }
 
@@ -32,7 +32,7 @@ public class JsonStringToResponseConverter {
             List<ShowInfoResponse> showInfoListResponse = Arrays.asList(showInfoArray);
             return showInfoListResponse;
         } catch (Exception e) {
-            throw new ApiGatewayException("Response could not be deserialized");
+            throw new ApiGatewayException("List of ShowInfoResponse could not be deserialized");
         }
     }
 
@@ -43,7 +43,7 @@ public class JsonStringToResponseConverter {
             EpisodeResponse episodeResponse = gson.fromJson(body, EpisodeResponse.class);
             return episodeResponse;
         } catch (Exception e) {
-            throw new ApiGatewayException("Response could not be deserialized");
+            throw new ApiGatewayException("EpisodeResponse could not be deserialized");
         }
     }
 
@@ -54,7 +54,7 @@ public class JsonStringToResponseConverter {
             ImageResponse imageResponse = gson.fromJson(body, ImageResponse.class);
             return imageResponse;
         } catch (Exception e) {
-            throw new ApiGatewayException("Response could not be deserialized");
+            throw new ApiGatewayException("ImageResponse could not be deserialized");
         }
     }
 
