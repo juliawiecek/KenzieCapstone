@@ -20,7 +20,6 @@ public class TVShowService {
     }
     public List<ShowInfoResponse> getPopularShows(){
         String popularShows = tvShowDao.getPopularShowsFromAPI();
-//        if (!popularShows.isEmpty())
         return jsonStringToResponseConverter.convertToShowInfoListResponse(popularShows);
     }
     public ShowInfoResponse getShow(String id) {
@@ -33,7 +32,7 @@ public class TVShowService {
     }
     public List<EpisodeResponse> getShowEpisodesForSeason(String id){
         String episodeList = tvShowDao.getShowEpisodesForSeasonFromAPI(id);
-        return Collections.emptyList();
+        return jsonStringToResponseConverter.convertToEpisodeListResponse(episodeList);
     }
     public ImageResponse getShowImages(String id){
         String showImages = tvShowDao.getShowImagesFromAPI(id);

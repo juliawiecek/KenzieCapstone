@@ -46,6 +46,17 @@ public class JsonStringToResponseConverter {
             throw new ApiGatewayException("EpisodeResponse could not be deserialized");
         }
     }
+    public List<EpisodeResponse> convertToEpisodeListResponse(String body) {
+        try {
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            EpisodeResponse[] episodeInfoArray = gson.fromJson(body, EpisodeResponse[].class);
+            List<EpisodeResponse> episodeResponses = Arrays.asList(episodeInfoArray);
+            return episodeResponses;
+        } catch (Exception e) {
+            throw new ApiGatewayException("List of ShowInfoResponse could not be deserialized");
+        }
+    }
 
     public ImageResponse convertToImageResponse(String body) {
         try {
