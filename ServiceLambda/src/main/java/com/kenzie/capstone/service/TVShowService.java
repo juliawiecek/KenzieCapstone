@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service;
 
+import com.kenzie.capstone.service.converter.JsonStringToResponseConverter;
 import com.kenzie.capstone.service.dao.TVShowDao;
 import com.kenzie.capstone.service.model.EpisodeResponse;
 import com.kenzie.capstone.service.model.ImageResponse;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class TVShowService {
     TVShowDao tvShowDao;
+    JsonStringToResponseConverter jsonStringToResponseConverter = new JsonStringToResponseConverter();
     @Inject
     public TVShowService(TVShowDao tvShowDao){
         this.tvShowDao = tvShowDao;
@@ -19,15 +21,15 @@ public class TVShowService {
     public List<ShowInfoResponse> getPopularShows(){
         String popularShows = tvShowDao.getPopularShowsFromAPI();
         // Convert to response, check problems, return response. Same for all methods
-        return Collections.emptyList();
+        return jsonStringToResponseConverter.convertToShowInfoListResponse(popularShows);
     }
     public ShowInfoResponse getShow(String id) {
         String requestedShow = tvShowDao.getShowFromAPI(id);
-        return new ShowInfoResponse();
+        return jsonStringToResponseConverter.convertToShowInfoResponse(requestedShow);
     }
     public ShowInfoResponse getShowInfo(String id) {
-        String showinfo = tvShowDao.getShowInfoFromAPI(id);
-        return new ShowInfoResponse();
+        String showInfo = tvShowDao.getShowInfoFromAPI(id);
+        return jsonStringToResponseConverter.convertToShowInfoResponse(showInfo);
     }
     public List<EpisodeResponse> getShowEpisodesForSeason(String id){
         String episodeList = tvShowDao.getShowEpisodesForSeasonFromAPI(id);
@@ -35,10 +37,10 @@ public class TVShowService {
     }
     public ImageResponse getShowImages(String id){
         String showImages = tvShowDao.getShowImagesFromAPI(id);
-        return new ImageResponse();
+        return jsonStringToResponseConverter.convertToImageResponse(showImages);
     }
     public EpisodeResponse getShowSeasons(String id){
         String showSeasons = tvShowDao.getShowSeasonsFromAPI(id);
-        return new EpisodeResponse();
+        return jsonStringToResponseConverter.convertToEpisodeResponse(showSeasons);
     }
 }
