@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.dao.TVShowDao;
 import com.kenzie.capstone.service.model.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class TVShowServiceClient {
 
@@ -22,16 +25,16 @@ public class TVShowServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-    public ShowInfoData getPopularShows() {
+    public List<ShowInfoData> getPopularShows() {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint(GET_POPULAR_SHOWS_ENDPOINT);
-        ShowInfoData showInfoData;
+        ShowInfoData[] showInfoData;
         try {
-            showInfoData = mapper.readValue(response, ShowInfoData.class);
+            showInfoData = mapper.readValue(response, ShowInfoData[].class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
-        return showInfoData;
+        return Arrays.asList(showInfoData);
     }
 
     public ShowInfoResponse searchShows(String query) {
@@ -82,15 +85,15 @@ public class TVShowServiceClient {
         return episodeData;
     }
 
-    public EpisodeData getShowEpisodeList(String id) {
+    public List<EpisodeData> getShowEpisodeList(String id) {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint(GET_SHOW_EPISODE_LIST_ENDPOINT.replace("{id}", id));
-        EpisodeData episodeData;
+        EpisodeData[] episodeData;
         try {
-            episodeData = mapper.readValue(response, EpisodeData.class);
+            episodeData = mapper.readValue(response, EpisodeData[].class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
-        return episodeData;
+        return Arrays.asList(episodeData);
     }
 }
