@@ -41,13 +41,13 @@ public class TVShowController {
         }
         return ResponseEntity.ok(imageData);
     }
-//    @GetMapping("/search/shows?q=")
-//    public ResponseEntity<String> getShowInfo(@PathVariable("id") String id){
-//       String showinfo = service.getShowInfo(id);
-//        if (showinfo == null || showinfo.isEmpty()){
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok(showinfo);}
+    @GetMapping
+    public ResponseEntity<ShowInfoData> getShowInfo(@PathVariable("id") String id){
+       ShowInfoData showinfo = service.getShowInfo(id);
+        if (showinfo == null){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(showinfo);}
     @GetMapping
     public ResponseEntity<EpisodeData> getShowSeasons(@PathVariable("id") String id){
         EpisodeData episodeData = service.getShowSeasons(id);

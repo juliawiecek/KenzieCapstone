@@ -19,10 +19,9 @@ public class ShowService {
         return tvShowServiceClient.getPopularShows();
     }
 
-    /*
-    Need to do, Maybe not?
-     */
-    public void searchShows(){}
+    public ShowInfoData searchShows(String id){
+        return tvShowServiceClient.searchShows(id);
+    }
 
     public ShowInfoData getShowInfo(String id){
         return tvShowServiceClient.getShowInfo(id);
