@@ -6,7 +6,9 @@ public class CommentResponse {
     private String title;
     private String contents;
     private String episodeId;
-    private String timestamp;
+    private long timestamp;
+
+    private int likes;
 
     public String getContents() {
         return contents;
@@ -28,8 +30,12 @@ public class CommentResponse {
         return commentId;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
+    }
+
+    public int getLikes() {
+        return likes;
     }
 
     public void setContents(String contents) {
@@ -52,7 +58,11 @@ public class CommentResponse {
         this.commentId = commentId;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }

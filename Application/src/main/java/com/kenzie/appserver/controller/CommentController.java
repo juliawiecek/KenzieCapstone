@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/comments") // base path for comments-related actions
@@ -72,5 +73,9 @@ public class CommentController {
         CommentResponse updatedComment = commentService.updateComment(commentId, request); // if commentId is not found, updateComment will throw CommentNotFoundException.
         return ResponseEntity.ok(updatedComment);
     }
+
+    // @PutMapping("/update/{commentId}/likes") // not sure what to put here for the PutMapping params
+    public ResponseEntity<CommentResponse> likeComment;
+
 
 }
