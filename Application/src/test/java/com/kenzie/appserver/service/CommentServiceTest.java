@@ -49,7 +49,7 @@ public class CommentServiceTest {
         commentRecord.setTitle("Test Title");
         commentRecord.setContents("Test Content");
         commentRecord.setEpisodeId("episode123");
-        commentRecord.setTimestamp(Instant.now().toString());
+        commentRecord.setTimestamp(Instant.now().getEpochSecond());
     }
 
     @Test
@@ -84,14 +84,14 @@ public class CommentServiceTest {
     void getTopThreeComments_returnsTopThreeComments() {
         CommentRecord anotherRecord = new CommentRecord();
         anotherRecord.setCommentId(UUID.randomUUID().toString());
-        anotherRecord.setTimestamp(Instant.now().minusSeconds(3600).toString()); // 1 hour earlier
+        anotherRecord.setTimestamp(Instant.now().getEpochSecond()- 3600); // 1 hour earlier
 
         when(commentRepository.findAll()).thenReturn(Arrays.asList(commentRecord, anotherRecord));
 
         List<CommentResponse> responses = commentService.getTopThreeComments();
 
         assertFalse(responses.isEmpty());
-        assertTrue(responses.size() <= 3); // makje sure no more than 3 comments are returned
+        assertTrue(responses.size() <= 3); // make sure no more than 3 comments are returned
         assertEquals(commentRecord.getCommentId(), responses.get(0).getCommentId()); // newest first
 
         verify(commentRepository).findAll();
