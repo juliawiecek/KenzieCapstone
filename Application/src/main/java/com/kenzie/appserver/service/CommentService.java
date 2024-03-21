@@ -29,7 +29,8 @@ public class CommentService {
         record.setUserName(createCommentRequest.getUserName());
         record.setContents(createCommentRequest.getContents());
         record.setEpisodeId(createCommentRequest.getEpisodeId());
-        record.setTimestamp(Instant.now().toString());
+        record.setTimestamp(Instant.now().getEpochSecond());
+        record.setLikes(0);
         commentRepository.save(record);
 
         return mapToCommentResponse(record);
@@ -62,7 +63,13 @@ public class CommentService {
         return true;
     }
 
-
+    public CommentResponse likeComment(String commentId) {
+        return commentRepository.findById(commentId).map(existingRecord -> {
+            existingRecord.addLike();
+            commentRepository.save(existingRecord);
+            return mapToCommentResponse(existingRecord);
+        }).orElseThrow(() -> new CommentNotFoundException(commentId));
+    }
 
     public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
         return commentRepository.findById(commentId).map(existingRecord -> {
@@ -81,6 +88,7 @@ public class CommentService {
         response.setContents(record.getContents());
         response.setEpisodeId(record.getEpisodeId());
         response.setTimestamp(record.getTimestamp());
+        response.setLikes(record.getLikes());
         return response;
     }
 }

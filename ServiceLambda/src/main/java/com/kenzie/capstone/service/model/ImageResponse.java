@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@JsonInclude
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ImageResponse {
     @JsonProperty("id")
     private String id;

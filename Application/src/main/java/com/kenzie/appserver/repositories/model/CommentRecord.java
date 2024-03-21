@@ -1,9 +1,6 @@
 package com.kenzie.appserver.repositories.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.Objects;
 
@@ -14,7 +11,9 @@ public class CommentRecord {
     private String userName;
     private String contents;
     private String episodeId;
-    private String timestamp;
+    private long timestamp;
+
+    private int likes;
 
     @DynamoDBHashKey(attributeName = "CommentId")
     public String getCommentId() {
@@ -41,8 +40,13 @@ public class CommentRecord {
     }
 
     @DynamoDBAttribute(attributeName = "Timestamp")
-    public String getTimestamp(){
+    public long getTimestamp(){
         return timestamp;
+    }
+
+    @DynamoDBAttribute(attributeName = "Likes")
+    public int getLikes() {
+        return likes;
     }
 
     public void setCommentId(String commentId) {
@@ -64,10 +68,17 @@ public class CommentRecord {
         this.episodeId = episodeId;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public void addLike() {
+        this.likes += 1;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
