@@ -26,7 +26,7 @@ public class CommentService {
         CommentRecord record = new CommentRecord();
         record.setCommentId(UUID.randomUUID().toString());
         record.setUserId(createCommentRequest.getUserId());
-        record.setTitle(createCommentRequest.getTitle());
+        record.setUserName(createCommentRequest.getUserName());
         record.setContents(createCommentRequest.getContents());
         record.setEpisodeId(createCommentRequest.getEpisodeId());
         record.setTimestamp(Instant.now().getEpochSecond());
@@ -72,21 +72,19 @@ public class CommentService {
     }
 
     public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
-        // exception handling if the comment to update does not exist.
         return commentRepository.findById(commentId).map(existingRecord -> {
-            existingRecord.setTitle(request.getTitle());
+            existingRecord.setUserName(request.getUserName());
             existingRecord.setContents(request.getContents());
             commentRepository.save(existingRecord);
             return mapToCommentResponse(existingRecord);
-        }).orElseThrow(() -> new CommentNotFoundException(commentId)); // exception added here
+        }).orElseThrow(() -> new CommentNotFoundException(commentId));
     }
-
     // method to convert CommentRecord to CommentResponse
     private CommentResponse mapToCommentResponse(CommentRecord record) {
         CommentResponse response = new CommentResponse();
         response.setCommentId(record.getCommentId());
         response.setUserId(record.getUserId());
-        response.setTitle(record.getTitle());
+        response.setUserName(record.getUserName());
         response.setContents(record.getContents());
         response.setEpisodeId(record.getEpisodeId());
         response.setTimestamp(record.getTimestamp());

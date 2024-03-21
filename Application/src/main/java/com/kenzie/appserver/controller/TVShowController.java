@@ -1,10 +1,13 @@
 package com.kenzie.appserver.controller;
 
+
+//import com.kenzie.capstone.service.client.TVShowServiceClient;
 import com.kenzie.appserver.service.model.ShowService;
 import com.kenzie.capstone.service.client.TVShowServiceClient;
 import com.kenzie.capstone.service.model.EpisodeData;
 import com.kenzie.capstone.service.model.ImageData;
 import com.kenzie.capstone.service.model.ShowInfoData;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

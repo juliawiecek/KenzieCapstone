@@ -8,7 +8,7 @@ import java.util.Objects;
 public class CommentRecord {
     private String commentId;
     private String userId;
-    private String title;
+    private String userName;
     private String contents;
     private String episodeId;
     private long timestamp;
@@ -25,11 +25,10 @@ public class CommentRecord {
         return userId;
     }
 
-    @DynamoDBAttribute(attributeName = "Title")
-    public String getTitle(){
-        return title;
+    @DynamoDBAttribute(attributeName = "UserName")
+    public String getUserName(){
+        return userName;
     }
-
     @DynamoDBAttribute(attributeName = "Contents")
     public String getContents(){
         return contents;
@@ -58,10 +57,9 @@ public class CommentRecord {
         this.userId = userId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
-
     public void setContents(String contents) {
         this.contents = contents;
     }
