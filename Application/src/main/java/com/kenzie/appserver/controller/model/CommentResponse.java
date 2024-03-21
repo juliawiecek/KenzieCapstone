@@ -3,10 +3,12 @@ package com.kenzie.appserver.controller.model;
 public class CommentResponse {
     private String commentId;
     private String userId;
-    private String title;
+    private String userName;
     private String contents;
     private String episodeId;
-    private String timestamp;
+    private long timestamp;
+
+    private int likes;
 
     public String getContents() {
         return contents;
@@ -20,16 +22,17 @@ public class CommentResponse {
         return userId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
+    public String getUserName() {return userName;}
     public String getCommentId() {
         return commentId;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
+    }
+
+    public int getLikes() {
+        return likes;
     }
 
     public void setContents(String contents) {
@@ -40,8 +43,8 @@ public class CommentResponse {
         this.episodeId = episodeId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setUserId(String userId) {
@@ -52,7 +55,11 @@ public class CommentResponse {
         this.commentId = commentId;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }

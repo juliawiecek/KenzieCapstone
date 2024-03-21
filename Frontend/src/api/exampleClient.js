@@ -38,7 +38,7 @@ export default class ExampleClient extends BaseClass {
      */
     async getExample(id, errorCallback) {
         try {
-            const response = await this.client.get(`/example/${id}`);
+            const response = await this.client.get(`/example/${id}`);// make  this for each endpoint
             return response.data;
         } catch (error) {
             this.handleError("getExample", error, errorCallback)

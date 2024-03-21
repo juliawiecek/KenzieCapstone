@@ -8,10 +8,7 @@ import com.kenzie.appserver.repositories.CommentRepository;
 import com.kenzie.appserver.repositories.model.CommentRecord;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
@@ -39,17 +36,17 @@ public class CommentServiceTest {
         commentId = UUID.randomUUID().toString();
         createCommentRequest = new CreateCommentRequest();
         createCommentRequest.setUserId("user123");
-        createCommentRequest.setTitle("Test Title");
+        createCommentRequest.setUserName("User Name");
         createCommentRequest.setContents("Test Content");
         createCommentRequest.setEpisodeId("episode123");
 
         commentRecord = new CommentRecord();
         commentRecord.setCommentId(commentId);
         commentRecord.setUserId("user123");
-        commentRecord.setTitle("Test Title");
+        commentRecord.setUserName("User Name");
         commentRecord.setContents("Test Content");
         commentRecord.setEpisodeId("episode123");
-        commentRecord.setTimestamp(Instant.now().toString());
+        commentRecord.setTimestamp(Instant.now().getEpochSecond());
     }
 
     @Test
@@ -60,7 +57,7 @@ public class CommentServiceTest {
 
         assertNotNull(response);
         assertEquals(createCommentRequest.getUserId(), response.getUserId());
-        assertEquals(createCommentRequest.getTitle(), response.getTitle());
+        assertEquals(createCommentRequest.getUserName(), response.getUserName());
         assertEquals(createCommentRequest.getContents(), response.getContents());
         assertEquals(createCommentRequest.getEpisodeId(), response.getEpisodeId());
 
@@ -84,14 +81,14 @@ public class CommentServiceTest {
     void getTopThreeComments_returnsTopThreeComments() {
         CommentRecord anotherRecord = new CommentRecord();
         anotherRecord.setCommentId(UUID.randomUUID().toString());
-        anotherRecord.setTimestamp(Instant.now().minusSeconds(3600).toString()); // 1 hour earlier
+        anotherRecord.setTimestamp(Instant.now().getEpochSecond()- 3600); // 1 hour earlier
 
         when(commentRepository.findAll()).thenReturn(Arrays.asList(commentRecord, anotherRecord));
 
         List<CommentResponse> responses = commentService.getTopThreeComments();
 
         assertFalse(responses.isEmpty());
-        assertTrue(responses.size() <= 3); // makje sure no more than 3 comments are returned
+        assertTrue(responses.size() <= 3); // make sure no more than 3 comments are returned
         assertEquals(commentRecord.getCommentId(), responses.get(0).getCommentId()); // newest first
 
         verify(commentRepository).findAll();
@@ -123,7 +120,7 @@ public class CommentServiceTest {
         CommentResponse updatedResponse = commentService.updateComment(commentId, createCommentRequest);
 
         assertNotNull(updatedResponse);
-        assertEquals(createCommentRequest.getTitle(), updatedResponse.getTitle());
+        assertEquals(createCommentRequest.getUserName(), updatedResponse.getUserName());
 
         verify(commentRepository).save(any(CommentRecord.class));
     }
