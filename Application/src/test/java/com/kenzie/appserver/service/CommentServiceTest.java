@@ -8,10 +8,7 @@ import com.kenzie.appserver.repositories.CommentRepository;
 import com.kenzie.appserver.repositories.model.CommentRecord;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
@@ -39,14 +36,14 @@ public class CommentServiceTest {
         commentId = UUID.randomUUID().toString();
         createCommentRequest = new CreateCommentRequest();
         createCommentRequest.setUserId("user123");
-        createCommentRequest.setTitle("Test Title");
+        createCommentRequest.setUserName("User Name");
         createCommentRequest.setContents("Test Content");
         createCommentRequest.setEpisodeId("episode123");
 
         commentRecord = new CommentRecord();
         commentRecord.setCommentId(commentId);
         commentRecord.setUserId("user123");
-        commentRecord.setTitle("Test Title");
+        commentRecord.setUserName("User Name");
         commentRecord.setContents("Test Content");
         commentRecord.setEpisodeId("episode123");
         commentRecord.setTimestamp(Instant.now().toString());
@@ -60,7 +57,7 @@ public class CommentServiceTest {
 
         assertNotNull(response);
         assertEquals(createCommentRequest.getUserId(), response.getUserId());
-        assertEquals(createCommentRequest.getTitle(), response.getTitle());
+        assertEquals(createCommentRequest.getUserName(), response.getUserName());
         assertEquals(createCommentRequest.getContents(), response.getContents());
         assertEquals(createCommentRequest.getEpisodeId(), response.getEpisodeId());
 
@@ -123,7 +120,7 @@ public class CommentServiceTest {
         CommentResponse updatedResponse = commentService.updateComment(commentId, createCommentRequest);
 
         assertNotNull(updatedResponse);
-        assertEquals(createCommentRequest.getTitle(), updatedResponse.getTitle());
+        assertEquals(createCommentRequest.getUserName(), updatedResponse.getUserName());
 
         verify(commentRepository).save(any(CommentRecord.class));
     }

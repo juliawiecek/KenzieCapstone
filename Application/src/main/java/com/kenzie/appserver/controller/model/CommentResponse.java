@@ -3,7 +3,7 @@ package com.kenzie.appserver.controller.model;
 public class CommentResponse {
     private String commentId;
     private String userId;
-    private String title;
+    private String userName;
     private String contents;
     private String episodeId;
     private String timestamp;
@@ -20,10 +20,7 @@ public class CommentResponse {
         return userId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
+    public String getUserName() {return userName;}
     public String getCommentId() {
         return commentId;
     }
@@ -40,8 +37,8 @@ public class CommentResponse {
         this.episodeId = episodeId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setUserId(String userId) {

@@ -2,7 +2,7 @@ package com.kenzie.appserver.controller.model;
 
 public class CreateCommentRequest {
     private String userId;
-    private String title;
+    private String userName;
     private String contents;
     private String episodeId;
 
@@ -22,8 +22,8 @@ public class CreateCommentRequest {
         return userId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getUserName() {
+        return userName;
     }
 
     public void setContents(String contents) {
@@ -34,10 +34,9 @@ public class CreateCommentRequest {
         this.episodeId = episodeId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
-
     public void setUserId(String userId) {
         this.userId = userId;
     }
