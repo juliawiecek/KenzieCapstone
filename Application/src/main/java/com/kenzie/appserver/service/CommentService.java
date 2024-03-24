@@ -6,6 +6,9 @@ import com.kenzie.appserver.controller.model.CreateCommentRequest;
 import com.kenzie.appserver.repositories.CommentRepository;
 import com.kenzie.appserver.repositories.model.CommentRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -21,7 +24,7 @@ public class CommentService {
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
-
+    @CachePut(value = "comments", key = "#result.commentId") // cache newly created comment
     public CommentResponse createNewComment(CreateCommentRequest createCommentRequest) {
         CommentRecord record = new CommentRecord();
         record.setCommentId(UUID.randomUUID().toString());
@@ -36,12 +39,13 @@ public class CommentService {
         return mapToCommentResponse(record);
     }
 
+    @Cacheable(value = "comments", unless = "#result.isEmpty()") // cache all comments, don't cache empty lists
     public List<CommentResponse> getAllComments() {
         List<CommentResponse> responses = new ArrayList<>();
         commentRepository.findAll().forEach(record -> responses.add(mapToCommentResponse(record)));
         return responses;
     }
-
+    @Cacheable(value = "comments", key = "'TopThree'", unless = "#result.isEmpty()") // cache top three comments
     public List<CommentResponse> getTopThreeComments() {
         Iterable<CommentRecord> allComments = commentRepository.findAll();
 
@@ -54,13 +58,13 @@ public class CommentService {
 
         return sortedComments;
     }
-    public boolean deleteComment(String commentId) {
+    @CacheEvict(value = "comments", key = "#commentId") // remove deleted comment from cache
+    public void deleteComment(String commentId) {
         // add exception if comment does not exist.
         if (!commentRepository.existsById(commentId)) {
             throw new CommentNotFoundException(commentId);
         }
         commentRepository.deleteById(commentId);
-        return true;
     }
 
     public CommentResponse likeComment(String commentId) {
@@ -70,7 +74,7 @@ public class CommentService {
             return mapToCommentResponse(existingRecord);
         }).orElseThrow(() -> new CommentNotFoundException(commentId));
     }
-
+    @CachePut(value = "comments", key = "#commentId") // update cache with updated comment
     public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
         return commentRepository.findById(commentId).map(existingRecord -> {
             existingRecord.setUserName(request.getUserName());
