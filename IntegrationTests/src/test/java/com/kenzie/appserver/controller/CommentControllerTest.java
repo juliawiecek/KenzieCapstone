@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,53 +50,56 @@ public class CommentControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = webAppContextSetup(webApplicationContext).build();
+        // set up of sample CommentRequest and commentResponse for each test
         createCommentRequest = new CreateCommentRequest();
         createCommentRequest.setUserId("user123");
-        createCommentRequest.setTitle("Sample Title");
+        createCommentRequest.setUserName("Sample User Name"); // changed from setTitle to setUserName
         createCommentRequest.setContents("Sample Content");
         createCommentRequest.setEpisodeId("episode123");
 
         commentResponse = new CommentResponse();
         commentResponse.setCommentId(UUID.randomUUID().toString());
         commentResponse.setUserId("user123");
-        commentResponse.setTitle("Sample Title");
+        commentResponse.setUserName("Sample User Name"); // changed from setTitle to setUserName
         commentResponse.setContents("Sample Content");
         commentResponse.setEpisodeId("episode123");
-        commentResponse.setTimestamp("2023-04-05T10:15:30.00Z");
+        commentResponse.setTimestamp(Instant.now().getEpochSecond()); // changed to long type for timestamp
     }
 
-    // happy for Create Comment
+    // happy path for Create Comment
     @Test
     void testPostComment_HappyPath() throws Exception {
         given(commentService.createNewComment(any(CreateCommentRequest.class))).willReturn(commentResponse);
         mockMvc.perform(post("/api/comments/create")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"userId\":\"user123\",\"title\":\"Sample Title\",\"contents\":\"Sample Content\",\"episodeId\":\"episode123\"}"))
+                        .content("{\"userId\":\"user123\",\"userName\":\"Sample User Name\",\"contents\":\"Sample Content\",\"episodeId\":\"episode123\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value("user123"));
+                .andExpect(jsonPath("$.userId").value("user123"))
+                .andExpect(jsonPath("$.userName").value("Sample User Name"));
     }
 
-    // sad for Create Comment
+    // sad path for Create Comment
     @Test
     void testPostComment_SadPath() throws Exception {
+
         given(commentService.createNewComment(any(CreateCommentRequest.class))).willThrow(new CommentCreationException("Failed to create comment"));
         mockMvc.perform(post("/api/comments/create")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"userId\":\"\",\"title\":\"\",\"contents\":\"\",\"episodeId\":\"\"}"))
+                        .content("{\"userId\":\"\",\"userName\":\"\",\"contents\":\"\",\"episodeId\":\"\"}"))
                 .andExpect(status().isBadRequest());
     }
 
-    // happy for Get All Comments
+    // happy path for Get All Comments
     @Test
     void testGetAllComments_happyPath() throws Exception {
         given(commentService.getAllComments()).willReturn(Arrays.asList(commentResponse));
         mockMvc.perform(get("/api/comments/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].userId").value("user123"));
+                .andExpect(jsonPath("$[0].userId").value("user123"))
+                .andExpect(jsonPath("$[0].userName").value("Sample User Name"));
     }
 
-    // sad for Get All Comments
+    // sad path for Get All Comments
     @Test
     void testGetAllComments_sadPath() throws Exception {
         given(commentService.getAllComments()).willThrow(new CommentNotFoundException("No comments found"));
@@ -103,28 +107,37 @@ public class CommentControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // happy for Update Comment
+    // appy path for Update Comment
     @Test
     void testUpdateComment_HappyPath() throws Exception {
-        given(commentService.updateComment(anyString(), any(CreateCommentRequest.class))).willReturn(commentResponse);
+        // setup updated response
+        CommentResponse updatedCommentResponse = new CommentResponse();
+        updatedCommentResponse.setCommentId(commentResponse.getCommentId()); // Same ID
+        updatedCommentResponse.setUserId("user123");
+        updatedCommentResponse.setUserName("Updated User Name"); // Updated name
+        updatedCommentResponse.setContents("Updated Content");
+        updatedCommentResponse.setEpisodeId("episode123");
+        updatedCommentResponse.setTimestamp(commentResponse.getTimestamp()); // Same timestamp for simplicity
+
+        given(commentService.updateComment(anyString(), any(CreateCommentRequest.class))).willReturn(updatedCommentResponse);
+
         mockMvc.perform(put("/api/comments/update/" + commentResponse.getCommentId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"userId\":\"user123\",\"title\":\"Updated Title\",\"contents\":\"Updated Content\",\"episodeId\":\"episode123\"}"))
+                        .content("{\"userId\":\"user123\",\"userName\":\"Updated User Name\",\"contents\":\"Updated Content\",\"episodeId\":\"episode123\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Updated Title"));
+                .andExpect(jsonPath("$.userName").value("Updated User Name")); // Ensure this matches the updated response
     }
-
-    // sad for Update Comment
+    // sad path for Update Comment
     @Test
     void testUpdateComment_SadPath() throws Exception {
         given(commentService.updateComment(anyString(), any(CreateCommentRequest.class))).willThrow(new CommentNotFoundException("Comment not found"));
-        mockMvc.perform(put("/api/comments/update/" + UUID.randomUUID())
+        mockMvc.perform(put("/api/comments/update/" + UUID.randomUUID().toString())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"userId\":\"user123\",\"title\":\"Nonexistent\",\"contents\":\"Nonexistent\",\"episodeId\":\"episode123\"}"))
+                        .content("{\"userId\":\"user123\",\"userName\":\"Nonexistent\",\"contents\":\"Nonexistent\",\"episodeId\":\"episode123\"}"))
                 .andExpect(status().isNotFound());
     }
 
-    // happy for Delete Comment
+    // happy path for Delete Comment
     @Test
     void testDeleteComment_HappyPath() throws Exception {
         doNothing().when(commentService).deleteComment(anyString());
@@ -136,64 +149,69 @@ public class CommentControllerTest {
     @Test
     void testDeleteComment_SadPath() throws Exception {
         doThrow(new CommentNotFoundException("Comment not found")).when(commentService).deleteComment(anyString());
-        mockMvc.perform(delete("/api/comments/" + UUID.randomUUID()))
+        mockMvc.perform(delete("/api/comments/" + UUID.randomUUID().toString()))
                 .andExpect(status().isNotFound());
     }
     // happy for getTopThree Comments
     @Test
-    public void getTopThreeComments_HappyPath() throws Exception {
-        // setup mock CommentResponse objects
+    void getTopThreeComments_HappyPath() throws Exception {
+        List<CommentResponse> topComments = new ArrayList<>();
+
+        // mock three different comments
         CommentResponse comment1 = new CommentResponse();
-        comment1.setCommentId("1");
+        comment1.setCommentId(UUID.randomUUID().toString());
         comment1.setUserId("user1");
-        comment1.setTitle("Title1");
-        comment1.setContents("Content1");
+        comment1.setUserName("User One");
+        comment1.setContents("Content One");
         comment1.setEpisodeId("episode1");
-        comment1.setTimestamp("2023-01-01T00:00:00Z");
+        comment1.setTimestamp(Instant.now().getEpochSecond());
 
         CommentResponse comment2 = new CommentResponse();
-        comment2.setCommentId("2");
+        comment2.setCommentId(UUID.randomUUID().toString());
         comment2.setUserId("user2");
-        comment2.setTitle("Title2");
-        comment2.setContents("Content2");
+        comment2.setUserName("User Two");
+        comment2.setContents("Content Two");
         comment2.setEpisodeId("episode2");
-        comment2.setTimestamp("2023-01-02T00:00:00Z");
+        comment2.setTimestamp(Instant.now().getEpochSecond());
 
         CommentResponse comment3 = new CommentResponse();
-        comment3.setCommentId("3");
+        comment3.setCommentId(UUID.randomUUID().toString());
         comment3.setUserId("user3");
-        comment3.setTitle("Title3");
-        comment3.setContents("Content3");
+        comment3.setUserName("User Three");
+        comment3.setContents("Content Three");
         comment3.setEpisodeId("episode3");
-        comment3.setTimestamp("2023-01-03T00:00:00Z");
+        comment3.setTimestamp(Instant.now().getEpochSecond());
 
-        List<CommentResponse> topComments = Arrays.asList(comment1, comment2, comment3);
+        topComments.add(comment1);
+        topComments.add(comment2);
+        topComments.add(comment3);
 
-
-        when(commentService.getTopThreeComments()).thenReturn(topComments);
+        given(commentService.getTopThreeComments()).willReturn(topComments);
 
         mockMvc.perform(get("/api/comments/top-three")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[0].commentId").value("1"))
-                .andExpect(jsonPath("$[1].commentId").value("2"))
-                .andExpect(jsonPath("$[2].commentId").value("3"));
+                .andExpect(jsonPath("$[0].userId").value(comment1.getUserId()))
+                .andExpect(jsonPath("$[0].userName").value(comment1.getUserName()))
+                .andExpect(jsonPath("$[1].userId").value(comment2.getUserId()))
+                .andExpect(jsonPath("$[1].userName").value(comment2.getUserName()))
+                .andExpect(jsonPath("$[2].userId").value(comment3.getUserId()))
+                .andExpect(jsonPath("$[2].userName").value(comment3.getUserName()));
     }
-    // sad for getTopThree Comments
-    @Test
-    public void getTopThreeComments_SadPath() throws Exception {
 
+    // sad path for Get Top Three Comments
+    @Test
+    void getTopThreeComments_SadPath() throws Exception {
+        // setup for when there are no top comments
         List<CommentResponse> topComments = new ArrayList<>();
 
-
-        when(commentService.getTopThreeComments()).thenReturn(topComments);
-
+        given(commentService.getTopThreeComments()).willReturn(topComments);
 
         mockMvc.perform(get("/api/comments/top-three")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(status().isOk()) // an empty list should still return a 200 OK status
+                .andExpect(jsonPath("$", hasSize(0))); // expecting the array to be empty
     }
 
 }
