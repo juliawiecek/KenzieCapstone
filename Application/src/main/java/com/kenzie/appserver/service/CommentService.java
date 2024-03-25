@@ -71,6 +71,14 @@ public class CommentService {
         }).orElseThrow(() -> new CommentNotFoundException(commentId));
     }
 
+    public CommentResponse unLikeComment(String commentId) {
+        return commentRepository.findById(commentId).map(existingRecord -> {
+            existingRecord.removeLike();
+            commentRepository.save(existingRecord);
+            return mapToCommentResponse(existingRecord);
+        }).orElseThrow(() -> new CommentNotFoundException(commentId));
+    }
+
     public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
         return commentRepository.findById(commentId).map(existingRecord -> {
             existingRecord.setUserName(request.getUserName());

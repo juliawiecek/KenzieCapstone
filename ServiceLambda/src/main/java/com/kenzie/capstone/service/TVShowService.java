@@ -22,9 +22,9 @@ public class TVShowService {
         String popularShows = tvShowDao.getPopularShowsFromAPI();
         return jsonStringToResponseConverter.convertToShowInfoListResponse(popularShows);
     }
-    public ShowInfoResponse getShow(String id) {
-        String requestedShow = tvShowDao.getShowFromAPI(id);
-        return jsonStringToResponseConverter.convertToShowInfoResponse(requestedShow);
+    public List<ShowInfoResponse> getShow(String query) {
+        String requestedShow = tvShowDao.getShowFromAPI(query);
+        return jsonStringToResponseConverter.convertToShowInfoListResponse(requestedShow);
     }
     public ShowInfoResponse getShowInfo(String id) {
         String showInfo = tvShowDao.getShowInfoFromAPI(id);
