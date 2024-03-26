@@ -88,16 +88,16 @@ public class TVShowServiceClient {
         return Arrays.asList(showInfoData);
     }
 
-    public ShowInfoResponse searchShows(String query) {
+    public ShowInfoData searchShows(String query) {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint(SEARCH_SHOWS_ENDPOINT.replace("{query}", query));
-        ShowInfoResponse showInfoResponse;
+        ShowInfoData showInfoData;
         try {
-            showInfoResponse = mapper.readValue(response, ShowInfoResponse.class);
+            showInfoData = mapper.readValue(response, ShowInfoData.class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
-        return showInfoResponse;
+        return showInfoData;
     }
 
     public ShowInfoData getShowInfo(String id) {
