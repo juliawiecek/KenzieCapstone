@@ -132,23 +132,23 @@ let comments = [{
 //}
 
 
-// Function to like a comment
-function likeComment(commentId) {
-   const comment = comments.find(c => c.id === commentId);
-
-   if (comment) {
-      // Toggle filled/outline appearance
-      if (comment.liked) {
-         comment.likes--;
-      } else {
-         comment.likes++;
-      }
-
-      comment.liked = !comment.liked;
-
-      renderComments();
-   }
-}
+//// Function to like a comment
+//function likeComment(commentId) {
+//   const comment = comments.find(c => c.id === commentId);
+//
+//   if (comment) {
+//      // Toggle filled/outline appearance
+//      if (comment.liked) {
+//         comment.likes--;
+//      } else {
+//         comment.likes++;
+//      }
+//
+//      comment.liked = !comment.liked;
+//
+//      renderComments();
+//   }
+//}
 
 // Function to change tab (sort comments)
 function changeTab(tab) {

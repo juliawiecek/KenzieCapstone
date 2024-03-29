@@ -18,6 +18,18 @@ public class ShowInfoResponse {
     @JsonProperty("summary")
     private String summary;
 
+    public ShowInfoResponse(String name, List<String> genres, Double rating, List<String> image, String summary) {
+        this.name = name;
+        this.genres = genres;
+        this.rating = rating;
+        this.image = image;
+        this.summary = summary;
+    }
+
+    public ShowInfoData getShowInfoData() {
+        // Return the show info data
+        return new ShowInfoData(name, genres, rating, image, summary);
+    }
 
     public String getName() {
         return name;

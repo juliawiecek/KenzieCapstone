@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
+import com.kenzie.capstone.service.model.ShowInfoData;
 import com.kenzie.capstone.service.model.ShowInfoResponse;
 import org.apache.logging.log4j.LogManager;
 
@@ -44,7 +45,7 @@ public class GetShow implements RequestHandler<APIGatewayProxyRequestEvent, APIG
 
         try {
 
-            List<ShowInfoResponse> showInfoResponseList = tvShowService.getShow(query);
+            List<ShowInfoData> showInfoResponseList = tvShowService.getShow(query);
             String output = gson.toJson(showInfoResponseList);
 
             return response

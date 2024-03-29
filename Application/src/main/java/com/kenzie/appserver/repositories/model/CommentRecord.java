@@ -1,11 +1,13 @@
 package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
-@DynamoDBTable(tableName = "Comment")
+@DynamoDBTable(tableName = "CommentTable")
 public class CommentRecord {
+//    @Id
     private String commentId;
     private String userId;
     private String userName;
@@ -20,7 +22,7 @@ public class CommentRecord {
         return commentId;
     }
 
-    @DynamoDBRangeKey(attributeName = "UserId")
+    @DynamoDBAttribute(attributeName = "UserId")
     public String getUserId() {
         return userId;
     }

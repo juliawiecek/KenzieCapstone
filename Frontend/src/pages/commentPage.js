@@ -9,16 +9,16 @@ class CommentPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'onCreate', 'renderExample'], this);
+        this.bindClassMethods(['onGet', 'onCreateComment', 'onGetComments', 'renderComments'], this);
         this.dataStore = new DataStore();
     }
 
     /**
-     * Once the page has loaded, set up the event handlers and fetch the concert list.
+     * Once the page has loaded, set up the event handlers and fetch the comments list.
      */
     async mount() {
         document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
-        document.getElementById('submit-btn').addEventListener('submit', this.onCreateComment);
+        document.querySelector('submit-btn').addEventListener('click', this.onCreateComment);
         await this.onGetComments();
         this.client = new CommentControllerClient();
 
@@ -27,20 +27,20 @@ class CommentPage extends BaseClass {
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
-    async renderExample() {
-        let resultArea = document.getElementById("result-info");
-
-        const example = this.dataStore.get("example");
-
-        if (example) {
-            resultArea.innerHTML = `
-                <div>ID: ${example.id}</div>
-                <div>Name: ${example.name}</div>
-            `
-        } else {
-            resultArea.innerHTML = "No Item";
-        }
-    }
+//    async renderExample() {
+//        let resultArea = document.getElementById("result-info");
+//
+//        const example = this.dataStore.get("example");
+//
+//        if (example) {
+//            resultArea.innerHTML = `
+//                <div>ID: ${example.id}</div>
+//                <div>Name: ${example.name}</div>
+//            `
+//        } else {
+//            resultArea.innerHTML = "No Item";
+//        }
+//    }
 
     async renderComments() {
         const commentList = document.getElementById('commentList');
@@ -57,7 +57,7 @@ class CommentPage extends BaseClass {
                 const userAvatar = document.createElement('img');
                 userAvatar.src = comment.profilePicture;
                 userAvatar.alt = 'Profile Picture';
-                userAvatar.classList.add('avatar'); // Add a CSS class for styling
+                userAvatar.classList.add('avatar');
 
                 const commentInfo = document.createElement('div');
                 commentInfo.classList.add('comment-info');
@@ -75,7 +75,7 @@ class CommentPage extends BaseClass {
                 likes.classList.add('likes-btn');
                 const thumbsUpBtn = document.createElement('button');
                 thumbsUpBtn.classList.add('thumbs-up-btn');
-                thumbsUpBtn.onclick = () => likeComment(comment.id);
+                thumbsUpBtn.onclick = () => getLikesComment(comment.id);
 
                 // Toggle filled/outline appearance
                 if (comment.liked) {
@@ -137,7 +137,7 @@ class CommentPage extends BaseClass {
         }
     }
 
-    async function getLikesComment(commentId) {
+    async getLikesComment(commentId) {
     try {
         const comment = comments.find(c => c.id === commentId);
 
@@ -166,7 +166,7 @@ class CommentPage extends BaseClass {
 }
 
     async onCreateComment(event) {
-        // Prevent the page from refreshing on form submit
+        // Prevent the page from refreshing on form submitk
         event.preventDefault();
         this.dataStore.set("comment", null);
 
