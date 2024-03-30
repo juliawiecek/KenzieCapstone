@@ -18,6 +18,19 @@ public class EpisodeResponse {
     @JsonProperty("summary")
     private String summary;
 
+    public EpisodeResponse(String name, int episodeOrder, int number, int runtime, String image, String summary) {
+        this.name = name;
+        this.episodeOrder = episodeOrder;
+        this.number = number;
+        this.runtime = runtime;
+        this.image = image;
+        this.summary = summary;
+    }
+
+    public EpisodeData getEpisodeData() {
+        return new EpisodeData(name, episodeOrder, number, runtime, image, summary);
+    }
+
     public String getName() {
         return name;
     }

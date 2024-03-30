@@ -5,8 +5,9 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
-@DynamoDBTable(tableName = "Comment")
+@DynamoDBTable(tableName = "CommentTable")
 public class CommentRecord {
+//    @Id
     private String commentId;
     private String userId;
     private String userName;
@@ -21,7 +22,7 @@ public class CommentRecord {
         return commentId;
     }
 
-    @DynamoDBRangeKey(attributeName = "UserId")
+    @DynamoDBAttribute(attributeName = "UserId")
     public String getUserId() {
         return userId;
     }
@@ -80,6 +81,11 @@ public class CommentRecord {
     public void addLike() {
         this.likes += 1;
     }
+
+    public void removeLike() {
+        this.likes -= 1;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

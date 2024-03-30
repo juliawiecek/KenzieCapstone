@@ -55,8 +55,16 @@ public class CommentController {
         return ResponseEntity.ok(updatedComment);
     }
 
-    // @PutMapping("/update/{commentId}/likes") // not sure what to put here for the PutMapping params
-    public ResponseEntity<CommentResponse> likeComment;
+    @PutMapping("/update/{commentId}/likes")
+    public ResponseEntity<CommentResponse> likeComment(@PathVariable String commentId) {
+        CommentResponse likedComment = commentService.likeComment(commentId);
+        return ResponseEntity.ok(likedComment);
+    }
 
+    @DeleteMapping("/update/{commentId}/likes")
+    public ResponseEntity<CommentResponse> unLikeComment(@PathVariable String commentId) {
+        CommentResponse unLikedComment = commentService.unLikeComment(commentId);
+        return ResponseEntity.ok(unLikedComment);
+    }
 
 }

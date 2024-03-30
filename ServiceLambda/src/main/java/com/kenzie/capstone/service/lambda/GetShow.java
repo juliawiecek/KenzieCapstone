@@ -9,10 +9,12 @@ import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
+import com.kenzie.capstone.service.model.ShowInfoData;
 import com.kenzie.capstone.service.model.ShowInfoResponse;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -33,9 +35,9 @@ public class GetShow implements RequestHandler<APIGatewayProxyRequestEvent, APIG
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        String id = input.getPathParameters().get("query");
+        String query = input.getPathParameters().get("query");
 
-        if (id == null || id.length() == 0){
+        if (query == null || query.isEmpty()){
             return response
                     .withStatusCode(400)
                     .withBody("query is invalid");
@@ -43,8 +45,8 @@ public class GetShow implements RequestHandler<APIGatewayProxyRequestEvent, APIG
 
         try {
 
-            ShowInfoResponse showInfoResponse = tvShowService.getShow(id);
-            String output = gson.toJson(showInfoResponse);
+            List<ShowInfoData> showInfoResponseList = tvShowService.getShow(query);
+            String output = gson.toJson(showInfoResponseList);
 
             return response
                     .withStatusCode(200)

@@ -74,6 +74,15 @@ public class CommentService {
             return mapToCommentResponse(existingRecord);
         }).orElseThrow(() -> new CommentNotFoundException(commentId));
     }
+
+    public CommentResponse unLikeComment(String commentId) {
+        return commentRepository.findById(commentId).map(existingRecord -> {
+            existingRecord.removeLike();
+            commentRepository.save(existingRecord);
+            return mapToCommentResponse(existingRecord);
+        }).orElseThrow(() -> new CommentNotFoundException(commentId));
+    }
+
     @CachePut(value = "comments", key = "#commentId") // update cache with updated comment
     public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
         return commentRepository.findById(commentId).map(existingRecord -> {
