@@ -1,12 +1,19 @@
 package com.kenzie.capstone.service.dao;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
+import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
+import com.google.common.collect.ImmutableMap;
+import com.kenzie.capstone.service.model.ExampleData;
+import com.kenzie.capstone.service.model.ShowInfoData;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class TVShowDao {
     private DynamoDBMapper mapper;
@@ -18,6 +25,20 @@ public class TVShowDao {
      */
     public TVShowDao(DynamoDBMapper mapper) {
         this.mapper = mapper;
+    }
+
+    public List<ShowInfoData> storeListOfShowInfoData(List<ShowInfoData> listOfShowInfoData) {
+        try {
+            mapper.save(listOfShowInfoData, new DynamoDBSaveExpression()
+                    .withExpected(ImmutableMap.of(
+                            "id",
+                            new ExpectedAttributeValue().withExists(false)
+                    )));
+        } catch (ConditionalCheckFailedException e) {
+            throw new IllegalArgumentException("id has already been used");
+        }
+
+        return listOfShowInfoData;
     }
 
     public String getPopularShowsFromAPI() {

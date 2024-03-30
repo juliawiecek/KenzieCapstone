@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
+import com.kenzie.capstone.service.model.ImageData;
 import com.kenzie.capstone.service.model.ImageResponse;
 import org.apache.logging.log4j.LogManager;
 
@@ -43,7 +44,7 @@ public class GetShowImages implements RequestHandler<APIGatewayProxyRequestEvent
 
         try {
 
-            ImageResponse imageResponse = tvShowService.getShowImages(id);
+            ImageData imageResponse = tvShowService.getShowImages(id);
             String output = gson.toJson(imageResponse);
 
             return response

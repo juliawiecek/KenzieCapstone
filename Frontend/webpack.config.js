@@ -8,7 +8,8 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    commentElements: path.resolve(__dirname, 'src', 'elements', 'commentElements.js'),
+    commentPage: path.resolve(__dirname, 'src', 'pages', 'commentPage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -21,7 +22,7 @@ module.exports = {
     proxy: [
       {
         context: [
-          '/example',
+          '/comment',
         ],
         target: 'http://localhost:5001'
       }
@@ -29,8 +30,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
+      template: './src/html/comment.html',
+      filename: 'comment.html',
       inject: false
     }),
     new CopyPlugin({

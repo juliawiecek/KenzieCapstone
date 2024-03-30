@@ -1,9 +1,21 @@
 package com.kenzie.appserver.controller.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotEmpty;
+
 public class CreateCommentRequest {
+    @NotEmpty
+    @JsonProperty("userId")
     private String userId;
+    @NotEmpty
+    @JsonProperty("userName")
     private String userName;
+    @NotEmpty
+    @JsonProperty("contents")
     private String contents;
+    @NotEmpty
+    @JsonProperty("episodeId")
     private String episodeId;
 
     public CreateCommentRequest() {
@@ -37,6 +49,7 @@ public class CreateCommentRequest {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
