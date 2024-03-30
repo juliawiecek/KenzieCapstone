@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
+import com.kenzie.capstone.service.dependency.DaggerTVShowServiceComponent;
 import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
 import com.kenzie.capstone.service.model.ShowInfoData;
 import com.kenzie.capstone.service.model.ShowInfoResponse;
@@ -27,7 +28,7 @@ public class GetPopularShows implements RequestHandler<APIGatewayProxyRequestEve
 
         log.info(gson.toJson(input));
 
-        TVShowServiceComponent tvShowServiceComponent = (TVShowServiceComponent) DaggerServiceComponent.create();
+        TVShowServiceComponent tvShowServiceComponent = (TVShowServiceComponent) DaggerTVShowServiceComponent.create();
         TVShowService tvShowService = tvShowServiceComponent.provideTVShowService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");

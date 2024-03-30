@@ -22,7 +22,7 @@ module.exports = {
     proxy: [
       {
         context: [
-          '/comment',
+          '/api/comments',
         ],
         target: 'http://localhost:5001'
       }
@@ -40,6 +40,26 @@ module.exports = {
           from: path.resolve('src/css'),
           to: path.resolve("dist/css")
         }
+//        {
+//          from: path.resolve('src/api'),
+//          to: path.resolve("dist/api")
+//        },
+//        {
+//          from: path.resolve('src/elements'),
+//          to: path.resolve("dist/elements")
+//        },
+//        {
+//          from: path.resolve('src/pages'),
+//          to: path.resolve("dist/pages")
+//        },
+//        {
+//          from: path.resolve('src/html'),
+//          to: path.resolve("dist/html")
+//        },
+//        {
+//          from: path.resolve('src/util'),
+//          to: path.resolve("dist/util")
+//        }
       ]
     }),
     new CleanWebpackPlugin()
