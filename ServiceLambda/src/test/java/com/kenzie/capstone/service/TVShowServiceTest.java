@@ -2,9 +2,7 @@ package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.dao.TVShowDao;
-import com.kenzie.capstone.service.model.EpisodeResponse;
-import com.kenzie.capstone.service.model.ImageResponse;
-import com.kenzie.capstone.service.model.ShowInfoResponse;
+import com.kenzie.capstone.service.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,6 +25,7 @@ class TVShowServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        tvShowService = new TVShowService(tvShowDao);
     }
 
     //ALL OF THE HAPPY PATH TESTS
@@ -38,7 +37,7 @@ class TVShowServiceTest {
         when(tvShowDao.getPopularShowsFromAPI()).thenReturn(fakeApiResponse);
 
         // When
-        List<ShowInfoResponse> result = tvShowService.getPopularShows();
+        List<ShowInfoData> result = tvShowService.getPopularShows();
 
         // Then
         assertNotNull(result);
@@ -48,70 +47,57 @@ class TVShowServiceTest {
 
     @Test
     void getShow_HappyPath() {
-        // Given
-        String fakeApiResponse = "{\"name\":\"Test Show\"}";
-        when(tvShowDao.getShowFromAPI("1")).thenReturn(fakeApiResponse);
+        String fakeApiResponse = "[{\"name\":\"Test Show\"}]";
+        when(tvShowDao.getShowFromAPI("query")).thenReturn(fakeApiResponse);
 
-        // When
-        ShowInfoResponse result = tvShowService.getShow("1");
+        List<ShowInfoData> result = tvShowService.getShow("query");
 
-        // Then
         assertNotNull(result);
-        assertEquals("Test Show", result.getName());
+        assertFalse(result.isEmpty());
+        assertEquals("Test Show", result.get(0).getName());
     }
 
     @Test
     void getShowInfo_HappyPath() {
-        // Given
         String fakeApiResponse = "{\"name\":\"Test Show\"}";
         when(tvShowDao.getShowInfoFromAPI("1")).thenReturn(fakeApiResponse);
 
-        // When
-        ShowInfoResponse result = tvShowService.getShowInfo("1");
+        ShowInfoData result = tvShowService.getShowInfo("1");
 
-        // Then
         assertNotNull(result);
         assertEquals("Test Show", result.getName());
     }
 
+
     @Test
     void getShowImages_HappyPath() {
-        // Given
         String fakeApiResponse = "{\"id\":\"1\",\"type\":\"Poster\"}";
         when(tvShowDao.getShowImagesFromAPI("1")).thenReturn(fakeApiResponse);
 
-        // When
-        ImageResponse result = tvShowService.getShowImages("1");
+        ImageData result = tvShowService.getShowImages("1");
 
-        // Then
         assertNotNull(result);
         assertEquals("1", result.getId());
     }
 
     @Test
     void getShowSeasons_HappyPath() {
-        // Given
         String fakeApiResponse = "{\"name\":\"Season 1\"}";
         when(tvShowDao.getShowSeasonsFromAPI("1")).thenReturn(fakeApiResponse);
 
-        // When
-        EpisodeResponse result = tvShowService.getShowSeasons("1");
+        EpisodeData result = tvShowService.getShowSeasons("1");
 
-        // Then
         assertNotNull(result);
         assertEquals("Season 1", result.getName());
     }
 
     @Test
     void getShowEpisodesForSeason_HappyPath() {
-        // Given
         String fakeApiResponse = "[{\"name\":\"Episode 1\"}]";
         when(tvShowDao.getShowEpisodesForSeasonFromAPI("1")).thenReturn(fakeApiResponse);
 
-        // When
-        List<EpisodeResponse> result = tvShowService.getShowEpisodesForSeason("1");
+        List<EpisodeData> result = tvShowService.getShowEpisodesForSeason("1");
 
-        // Then
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals("Episode 1", result.get(0).getName());
