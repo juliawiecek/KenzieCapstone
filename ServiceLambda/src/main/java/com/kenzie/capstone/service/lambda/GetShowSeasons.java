@@ -7,7 +7,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.TVShowService;
-import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
+import com.kenzie.capstone.service.dependency.DaggerTVShowServiceComponent;
 import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
 import com.kenzie.capstone.service.model.EpisodeData;
 import com.kenzie.capstone.service.model.EpisodeResponse;
@@ -26,7 +26,7 @@ public class GetShowSeasons implements RequestHandler<APIGatewayProxyRequestEven
 
         log.info(gson.toJson(input));
 
-        TVShowServiceComponent tvShowServiceComponent = (TVShowServiceComponent) DaggerServiceComponent.create();
+        TVShowServiceComponent tvShowServiceComponent = (TVShowServiceComponent) DaggerTVShowServiceComponent.create();
         TVShowService tvShowService = tvShowServiceComponent.provideTVShowService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
