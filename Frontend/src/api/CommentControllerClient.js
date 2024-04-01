@@ -5,7 +5,7 @@ export default class CommentControllerClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'createComment', 'getAllComments', 'getTopThreeComments', 'deleteComment', 'updateComment'];
+        const methodsToBind = ['clientLoaded', 'createComment', 'getAllComments', 'getTopThreeComments', 'deleteComment', 'updateComment', 'likeComment'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -18,9 +18,9 @@ export default class CommentControllerClient extends BaseClass {
         }
     }
 
-    async createComment(commentRequest, errorCallback) {
+    async createComment(username, comment, errorCallback) {
         try {
-            const response = await this.client.post('/api/comments/create', commentRequest);
+            const response = await this.client.post('/api/comments/create', username, comment);
             return response.data;
         } catch (error) {
             this.handleError("createComment", error, errorCallback);
@@ -59,6 +59,24 @@ export default class CommentControllerClient extends BaseClass {
             return response.data;
         } catch (error) {
             this.handleError("updateComment", error, errorCallback);
+        }
+    }
+
+    async likeComment(commentId, errorCallback) {
+        try {
+            const response = await this.client.put(`/api/comments/update/${commentId}/likes`);
+            return response.data;
+        } catch (error) {
+            this.handleError("likeComment", error, errorCallback);
+        }
+    }
+
+    async unLikeComment(commentId, errorCallback) {
+        try {
+            const response = await this.client.delete(`/api/comments/update/${commentId}/likes`);
+            return response.data;
+        } catch (error) {
+            this.handleError("unLikeComment", error, errorCallback);
         }
     }
 

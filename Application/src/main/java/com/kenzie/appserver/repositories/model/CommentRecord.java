@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "CommentTable")
 public class CommentRecord {
-    @Id
+//    @Id
     private String commentId;
     private String userId;
     private String userName;
@@ -81,6 +81,11 @@ public class CommentRecord {
     public void addLike() {
         this.likes += 1;
     }
+
+    public void removeLike() {
+        this.likes -= 1;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

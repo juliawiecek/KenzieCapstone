@@ -17,6 +17,13 @@ public class ImageResponse {
     @JsonProperty("resolutions")
     private List<String> resolutions;
 
+    public ImageResponse(String id, String type, boolean main, List<String> resolutions) {
+        this.id = id;
+        this.type = type;
+        this.main = main;
+        this.resolutions = resolutions;
+    }
+
     public String getId() {
         return id;
     }
