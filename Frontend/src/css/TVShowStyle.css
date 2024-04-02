@@ -1,0 +1,543 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700,800");
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: url("https://img.icons8.com/material-rounded/18/FFFFFF/full-stop.png") 10 10, auto;
+}
+
+.hidden {
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute;
+}
+
+.centered-container {
+    width: 1220px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.left-container {
+    width: 570px;
+    margin-left: 150px;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1px;
+    padding-bottom: 20px;
+    border-radius: 15px;
+    background: rgba(21, 21, 27, 0.8);
+}
+
+html {
+    font-family: "Open Sans", Arial, sans-serif;
+    color: #B5B5BE;
+    background-color: #0b0b0e;
+}
+
+body {
+    min-width: 1280px;
+    background: linear-gradient(0deg, rgba(11, 11, 14, 0) 50%, #0b0b0e 100%), linear-gradient(180deg, rgba(11, 11, 14, 0) 0%, rgba(11, 11, 14, 0.7791491597) 82%, #0b0b0e 100%), url("https://static.tvmaze.com/uploads/images/original_untouched/218/547438.jpg") no-repeat center/cover;
+}
+
+/* ~~~ header ~~~ */
+.navbar {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    cursor: url("https://img.icons8.com/fluency-systems-filled/17/FFFFFF/home.png") 9 9, auto;
+}
+
+/* ~~~ sections ~~~ */
+.additional-info {
+    position: relative;
+}
+
+.centered-container._dotted {
+    position: relative;
+    padding: 30px 0;
+}
+
+._dotted::after {
+    content: "";
+    position: absolute;
+    right: -5px;
+    top: -50px;
+    bottom: -50px;
+    left: 30%;
+    background: url(svg/dots-background.svg) repeat-y right top;
+    background-size: 704px 27px;
+    z-index: 0;
+}
+
+.section {
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    z-index: 1;
+}
+
+.section + .section {
+    margin-top: 30px;
+}
+
+.section-header {
+    position: relative;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: #FFFFFF;
+    margin-left: 540px;
+}
+
+.section-header::after {
+    content: "...";
+    position: relative;
+    top: -5px;
+    left: 9px;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    color: #CC364E;
+}
+
+/* footer */
+.footer {
+    padding-top: 36px;
+    padding-bottom: 36px;
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Учебные стили */
+.movie-info {
+    padding: 125px 0px 105px;
+    color: white;
+}
+
+.movie-info h1 {
+    width: 380px;
+    margin-bottom: 35px;
+    font-size: 50px;
+    font-weight: 900;
+}
+
+.movie-info p {
+    width: 530px;
+    font-size: 16px;
+    font-height: 1.375px;
+    margin-top: 30px;
+}
+
+.btn-block {
+    margin-top: 30px;
+}
+
+.btn-block button {
+    border: none;
+}
+
+.btn-watch {
+    padding: 10px 25px;
+    border-radius: 15px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 18px;
+    background-color: #DB202C;
+}
+
+.btn-watch:hover {
+    color: rgba(207, 214, 225, 0.5);
+    background-color: #0f0f13;
+    outline: 1px solid #373737;
+    border: none;
+    cursor: url("https://img.icons8.com/material-rounded/28/FFFFFF/play--v1.png") 14 14, auto;
+}
+
+.btn-wait {
+    background-color: transparent;
+    color: white;
+    font-size: 15px;
+    text-decoration: underline;
+    margin-left: 25px;
+    border: none;
+    cursor: url("https://img.icons8.com/material-rounded/20/FFFFFF/comments--v1.png") 9 9, auto;
+    padding: 10px 25px;
+    border-radius: 15px;
+}
+
+.btn-wait:hover {
+    color: red;
+    text-decoration: none;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: #0b0b0e;
+    font-family: "Montserrat", helvetica, arial, sans-serif;
+    font-size: 14px;
+    color: #cfd6e1;
+    line-height: 1.5;
+    font-weight: 400;
+    overflow-x: hidden;
+}
+
+* {
+    transition: 0.4s;
+}
+
+a {
+    text-decoration: none;
+}
+
+.episode-card {
+    background-image: url(https://static.tvmaze.com/uploads/images/original_untouched/89/224025.jpg);
+    background-size: 55% auto;
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    width: 80%;
+    max-width: 1000px;
+    height: 240px;
+    display: block;
+    margin: 8vh auto;
+    border-radius: 8px;
+    box-shadow: 0px 8px 12px 0px rgba(0, 0, 0, 0.25);
+}
+
+.episode-card:nth-child(2) {
+    background-image: url(https://static.tvmaze.com/uploads/images/original_untouched/89/224026.jpg);
+}
+
+.episode-card:nth-child(3) {
+    background-image: url("http://www.dvdactive.com/images/reviews/screenshot/2011/5/akirabdcap8_original.jpg");
+}
+
+.color-overlay {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: #0b0b0e;
+    background: linear-gradient(90deg, rgba(11, 11, 14, 0) 0%, #15151b 55%, #15151b 100%);
+}
+
+h1, h2, h3 {
+    font-family: "Montserrat", helvetica, arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1;
+    font-weight: 400;
+}
+
+.episode-content {
+    width: 49.5%;
+    display: block;
+    position: relative;
+    float: right;
+    padding-right: 1em;
+    height: 200px;
+}
+.episode-content .episode-title {
+    color: #ffffff;
+    padding-bottom: 0.4em;
+    opacity: 1;
+    border-bottom: 0.1em solid #DB202C;
+}
+.episode-content .episode-info {
+    letter-spacing: 2px;
+    font-size: 0.8em;
+    color: white;
+    line-height: 1;
+    margin: 0;
+    font-weight: 600;
+    opacity: 0.75;
+}
+.episode-content .episode-header {
+    margin-bottom: 1em;
+}
+.episode-content .episode-desc {
+    font-weight: 300;
+    opacity: 0.84;
+    margin-bottom: 2em;
+}
+
+.btn {
+    padding: 0.8em 2em;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: url("https://img.icons8.com/material-rounded/28/FFFFFF/play--v1.png") 14 14, auto;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    border-radius: 15px;
+}
+
+.btn::before {
+    font-family: "Material Icons";
+    content: "▶";
+    font-size: 1em;
+    padding-right: 0.5em;
+}
+
+.btn-outline:hover {
+    border-color: #DB202C;
+    color: #DB202C;
+    box-shadow: 0px 1px 8px 0px rgba(245, 199, 0, 0.2);
+}
+
+.episode-number {
+    position: relative;
+    top: 100px;
+    left: -75px;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgba(207, 214, 225, 0.5);
+    z-index: 2;
+}
+
+@media (max-width: 1000px) {
+    .episode-content {
+        width: 50%;
+        max-width: 95%;
+    }
+}
+@media (max-width: 800px) {
+    .episode-card {
+        width: 95%;
+        max-width: 95%;
+    }
+}
+@media (max-width: 600px) {
+    .episode-card, .episode-card:nth-child(2), .episode-card:nth-child(3) {
+        background-position: 50% 0%;
+        background-size: cover;
+        height: 400px;
+    }
+
+    .color-overlay {
+        background: linear-gradient(to bottom, rgba(42, 159, 255, 0.2) 0%, #212120 60%, #212120 100%);
+    }
+
+    .episode-content {
+        margin-top: 4.2em;
+        width: 90%;
+    }
+}
+.cursor {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--width);
+    height: var(--height);
+transform: translate(calc(var(--x) - var(--width) / 2), calc(var(--y) - var(--height) / 2));
+    transition-duration: 0.1s;
+    transition-timing-function: cubic-bezier(0.25, 0.25, 0.42, 1);
+    transition-property: width, height, transform;
+    z-index: 10;
+    pointer-events: none;
+    will-change: transform;
+}
+@media (pointer: fine) {
+    .cursor {
+        display: block;
+    }
+}
+.cursor::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--radius);
+    border: 2px solid #DB202C;
+    opacity: var(--scale);
+    transform: scale(var(--scale));
+    transition: 0.3s cubic-bezier(0.25, 0.25, 0.42, 1) opacity, 0.3s cubic-bezier(0.25, 0.25, 0.42, 1) transform, 0.1s cubic-bezier(0.25, 0.25, 0.42, 1) border-radius;
+}
+
+html:not(html:hover) .cursor::after {
+    opacity: 0;
+    transform: scale(0);
+}
+
+:root {
+    --bg-color: #222429;
+    --primary-bg-color: #333740;
+    --primary-color: #2c62f6;
+    --text-color: #b1b8ca;
+    --text-active: #ffffff;
+    --button-hover-bg-color: #2b2e34;
+    --border-color: #494d59;
+    --dropdown-height: 0;
+    --rotate-arrow: 0;
+    --translate-value: 0;
+    --list-opacity: 0;
+    --transition-time: 0.4s;
+    --transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --border-radius: 1.4rem;
+    --list-button-height: 4.6rem;
+    --floating-icon-size: 26;
+    --floating-icon-top: 0;
+    --floating-icon-left: 0;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+}
+
+svg {
+    height: 1.6rem;
+    width: 1.6rem;
+}
+
+.text-truncate {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.dropdown-container {
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 20rem;
+    margin-left: 450px;
+}
+
+.dropdown-title-icon,
+.dropdown-arrow {
+    display: inline-flex;
+}
+
+.dropdown-title {
+    margin: 0 auto 0 1.8rem;
+    text-transform: capitalize;
+}
+
+.dropdown-button {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 1.7rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1.8rem;
+    cursor: url("https://img.icons8.com/material-rounded/20/FFFFFF/hand-cursor.png") 10 10, auto;
+}
+
+.dropdown-button svg {
+    transition: all var(--transition-time) var(--transition-timing);
+    fill: var(--text-color);
+}
+
+.dropdown-button svg,
+.dropdown-button span {
+    pointer-events: none;
+}
+
+.dropdown-button:hover,
+.dropdown-button:focus {
+    color: var(--text-active);
+}
+
+.dropdown-button:hover svg,
+.dropdown-button:focus svg {
+    fill: var(--text-active);
+}
+
+.main-button {
+    height: 5.2rem;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    transition: all var(--transition-time) var(--transition-timing);
+}
+
+.main-button .dropdown-arrow {
+    transition: transform var(--transition-time) var(--transition-timing);
+    transform: rotate(var(--rotate-arrow));
+    margin-left: 1.8rem;
+}
+
+.list-button {
+    height: var(--list-button-height);
+    transition: color var(--transition-time) var(--transition-timing);
+    color: var(--text-color);
+    overflow: hidden;
+    cursor: url("https://img.icons8.com/material-rounded/20/FFFFFF/hand-cursor.png") 10 10, auto;
+}
+
+.dropdown-list-container {
+    overflow: hidden;
+    max-height: var(--dropdown-height);
+    transition: max-height var(--transition-time) var(--transition-timing);
+}
+
+.dropdown-list-wrapper {
+    margin-top: 1rem;
+    background-color: var(--primary-bg-color);
+    border-radius: var(--border-radius);
+    border: 0.1rem solid var(--border-color);
+    position: relative;
+}
+
+ul.dropdown-list {
+    position: relative;
+    list-style-type: none;
+}
+
+ul.dropdown-list::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 0;
+    height: var(--list-button-height);
+    background-color: var(--button-hover-bg-color);
+    transition: all var(--transition-time) linear;
+    transform: translateY(var(--translate-value));
+    border-radius: var(--border-radius);
+    pointer-events: none;
+}
+
+ul.dropdown-list:hover::before,
+ul.dropdown-list:hover ~ .floating-icon {
+    opacity: 1;
+}
+
+li.dropdown-list-item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    opacity: var(--list-opacity);
+    transition: opacity 0.8s var(--transition-timing);
+}
