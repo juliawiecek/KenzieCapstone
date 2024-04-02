@@ -18,9 +18,9 @@ export default class CommentControllerClient extends BaseClass {
         }
     }
 
-    async createComment(username, comment, errorCallback) {
+    async createComment(userName, contents, errorCallback) {
         try {
-            const response = await this.client.post('/api/comments/create', username, comment);
+            const response = await this.client.post('/api/comments/create', {userName, contents});
             return response.data;
         } catch (error) {
             this.handleError("createComment", error, errorCallback);

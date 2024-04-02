@@ -8,6 +8,7 @@ module.exports = {
     usedExports: true
   },
   entry: {
+    CommentControllerClient: path.resolve(__dirname, 'src', 'api', 'CommentControllerClient.js'),
     commentElements: path.resolve(__dirname, 'src', 'elements', 'commentElements.js'),
     commentPage: path.resolve(__dirname, 'src', 'pages', 'commentPage.js'),
   },
@@ -30,8 +31,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/html/comment.html',
-      filename: 'comment.html',
+      template: './src/html/index.html',
+      filename: 'index.html',
       inject: false
     }),
     new CopyPlugin({
