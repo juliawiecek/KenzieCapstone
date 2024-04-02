@@ -1,7 +1,7 @@
 package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import org.springframework.data.annotation.Id;
+import nonapi.io.github.classgraph.json.Id;
 
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public class CommentRecord {
         return commentId;
     }
 
-    @DynamoDBAttribute(attributeName = "UserId")
+    @DynamoDBRangeKey(attributeName = "UserId")
     public String getUserId() {
         return userId;
     }
