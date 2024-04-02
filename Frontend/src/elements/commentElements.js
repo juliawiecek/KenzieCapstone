@@ -1,5 +1,5 @@
 // Sample user data
-const users = [{
+export const users = [{
       username: 'User1',
       profilePicture: 'https://i.imgur.com/JZyjvRB.png'
    },
@@ -14,7 +14,7 @@ const users = [{
 ];
 
 // Sample comments data
-let comments = [{
+export let comments = [{
       id: 1,
       username: 'User1',
       profilePicture: 'https://i.imgur.com/JZyjvRB.png',
@@ -151,38 +151,38 @@ let comments = [{
 //}
 
 // Function to change tab (sort comments)
-function changeTab(tab) {
-   const tabs = document.querySelectorAll('.tab');
-   tabs.forEach(t => t.classList.remove('active'));
-
-   const selectedTab = document.querySelector(`.tab[data-tab="${tab}"]`);
-   selectedTab.classList.add('active');
-
-   if (tab === 'recent') {
-      comments.sort((a, b) => b.timestamp - a.timestamp);
-   } else if (tab === 'popular') {
-      comments.sort((a, b) => b.likes - a.likes);
-   }
-
-   renderComments();
-}
-
-// Function to edit a comment
-function editComment(commentId) {
-   const comment = comments.find(c => c.id === commentId);
-
-   if (comment) {
-      const updatedText = prompt('Edit your comment:', comment.text);
-
-      if (updatedText !== null) {
-         comment.text = updatedText;
-         renderComments();
-      }
-   }
-}
-
-// Initial render
-renderComments();
+//function changeTab(tab) {
+//   const tabs = document.querySelectorAll('.tab');
+//   tabs.forEach(t => t.classList.remove('active'));
+//
+//   const selectedTab = document.querySelector(`.tab[data-tab="${tab}"]`);
+//   selectedTab.classList.add('active');
+//
+//   if (tab === 'recent') {
+//      comments.sort((a, b) => b.timestamp - a.timestamp);
+//   } else if (tab === 'popular') {
+//      comments.sort((a, b) => b.likes - a.likes);
+//   }
+//
+//   renderComments();
+//}
+//
+//// Function to edit a comment
+//function editComment(commentId) {
+//   const comment = comments.find(c => c.id === commentId);
+//
+//   if (comment) {
+//      const updatedText = prompt('Edit your comment:', comment.text);
+//
+//      if (updatedText !== null) {
+//         comment.text = updatedText;
+//         renderComments();
+//      }
+//   }
+//}
+//
+//// Initial render
+//renderComments();
 
 const updateProperties = (elem, state) => {
 
