@@ -8,6 +8,7 @@ module.exports = {
     usedExports: true
   },
   entry: {
+    CommentControllerClient: path.resolve(__dirname, 'src', 'api', 'CommentControllerClient.js'),
     commentElements: path.resolve(__dirname, 'src', 'elements', 'commentElements.js'),
     commentPage: path.resolve(__dirname, 'src', 'pages', 'commentPage.js'),
   },
@@ -22,7 +23,7 @@ module.exports = {
     proxy: [
       {
         context: [
-          '/comment',
+          '/api/comments',
         ],
         target: 'http://localhost:5001'
       }
@@ -30,8 +31,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/html/comment.html',
-      filename: 'comment.html',
+      template: './src/html/index.html',
+      filename: 'index.html',
       inject: false
     }),
     new CopyPlugin({
@@ -40,6 +41,26 @@ module.exports = {
           from: path.resolve('src/css'),
           to: path.resolve("dist/css")
         }
+//        {
+//          from: path.resolve('src/api'),
+//          to: path.resolve("dist/api")
+//        },
+//        {
+//          from: path.resolve('src/elements'),
+//          to: path.resolve("dist/elements")
+//        },
+//        {
+//          from: path.resolve('src/pages'),
+//          to: path.resolve("dist/pages")
+//        },
+//        {
+//          from: path.resolve('src/html'),
+//          to: path.resolve("dist/html")
+//        },
+//        {
+//          from: path.resolve('src/util'),
+//          to: path.resolve("dist/util")
+//        }
       ]
     }),
     new CleanWebpackPlugin()
