@@ -20,7 +20,7 @@ export default class CommentControllerClient extends BaseClass {
 
     async createComment(userName, contents, errorCallback) {
         try {
-            const response = await this.client.post('/api/comments/create', {userName, contents});
+            const response = await this.client.post(`/api/comments/create`, {userName, contents});
             return response.data;
         } catch (error) {
             this.handleError("createComment", error, errorCallback);
@@ -29,7 +29,7 @@ export default class CommentControllerClient extends BaseClass {
 
     async getAllComments(errorCallback) {
         try {
-            const response = await this.client.get('/api/comments/all');
+            const response = await this.client.get(`/api/comments/all`);
             return response.data;
         } catch (error) {
             this.handleError("getAllComments", error, errorCallback);
@@ -38,7 +38,7 @@ export default class CommentControllerClient extends BaseClass {
 
     async getTopThreeComments(errorCallback) {
         try {
-            const response = await this.client.get('/api/comments/top-three');
+            const response = await this.client.get(`/api/comments/top-three`);
             return response.data;
         } catch (error) {
             this.handleError("getTopThreeComments", error, errorCallback);

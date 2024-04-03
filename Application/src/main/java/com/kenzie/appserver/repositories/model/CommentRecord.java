@@ -7,7 +7,6 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "CommentTable")
 public class CommentRecord {
-//    @Id
     private String commentId;
     private String userId;
     private String userName;
@@ -22,7 +21,7 @@ public class CommentRecord {
         return commentId;
     }
 
-    @DynamoDBRangeKey(attributeName = "UserId")
+    @DynamoDBAttribute(attributeName = "UserId")
     public String getUserId() {
         return userId;
     }
