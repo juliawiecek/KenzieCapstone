@@ -1,40 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <script type="text/javascript" src="examplePage.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="commentPage.js"></script>
+    <script src="commentElements.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/commentStyle.css">
+    <title>Notflix Comments</title>
 </head>
-<body class="background">
-    <header class="header" id="header">
-        <div class="site-title">
-            <a class="header_home" href="index.html">Example App</a>
+<body>
+<header class="top-menu">
+    <nav class="navbar">
+        <div class="navbar-title">
+            <div class="cursor"></div>
+            <p class="title"></p>
+            <img src= "https://fontmeme.com/permalink/240303/f65a7117cdcf82e46065755a0637cff7.png">
         </div>
-    </header>
-    <div class="card">
-        <h2>Create Example</h2>
-        <form class="card-content" id="create-form">
-            <p class="form-field">
-                <label>Name</label>
-                <input type="text" required class="validated-field" id="create-name-field">
-            </p>
-            <button type="submit">Create</button>
-        </form>
+    </nav>
+</header>
+<div class="cursor"></div>
+<div class="episode-card">
+    <div class="color-overlay">
+        <div class="episode-content">
+            <div class="episode-header">
+                <h1 class="episode-title">I Never Met the Dead Man</h1>
+                <h4 class="episode-info">30 min</h4>
+            </div>
+            <p class="episode-desc">Peter (voice of Seth MacFarlane) learns to live without TV when he crashes his car into a satellite dish. Meanwhile, Stewie devises a climate-control machine.</p>
+            <a class="btn btn-outline" href="#">Watch Episode</a>
+        </div>
+        <div class="episode-number">2</div>
     </div>
-    <div class="card">
-        <h2>Get By ID</h2>
-        <form class="card-content" id="get-by-id-form">
-            <p class="form-field">
-                <label>ID</label>
-                <input type="text" required class="validated-field" id="id-field">
-            </p>
-            <button type="submit">Get</button>
-        </form>
+</div>
+<div class="comment-section">
+    <u id="commentsHeading"></u>
+    <div class="comment-box">
+        <input type="text" id="username" placeholder="Your username">
+        <textarea type="text" id="comment" placeholder="Add a comment"></textarea>
+        <button class="submit-btn" id="create-comment">Comment</button>
     </div>
-    <div class="card" id="result">
-        <h2>Result:</h2>
-        <p id="result-info"></p>
+    <div class="tabs">
+        <div class="tab active" data-tab="popular" onclick="changeTab('popular')">Most Popular</div>
+        <div class="tab" data-tab="recent" onclick="changeTab('recent')">Most Recent</div>
     </div>
-
+    <ul class="comment-list" id="commentList">
+        <!-- Comments will be dynamically added here -->
+    </ul>
+</div>
 </body>
 </html>

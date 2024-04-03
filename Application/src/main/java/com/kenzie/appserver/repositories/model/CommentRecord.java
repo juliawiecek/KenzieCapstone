@@ -1,13 +1,12 @@
 package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import org.springframework.data.annotation.Id;
+import nonapi.io.github.classgraph.json.Id;
 
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "CommentTable")
 public class CommentRecord {
-//    @Id
     private String commentId;
     private String userId;
     private String userName;
