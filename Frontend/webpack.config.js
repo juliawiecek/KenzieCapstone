@@ -29,7 +29,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({//used to be index.html
       template: './src/html/comment.html',
       filename: 'comment.html',
       inject: false
