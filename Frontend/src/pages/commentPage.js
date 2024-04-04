@@ -10,7 +10,7 @@ class CommentPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['createComment', 'renderComment'], this);
+        this.bindClassMethods(['createComment', 'renderComment', 'renderComments', 'getAllComments', 'getLikesComment'], this);
         this.dataStore = new DataStore();
     }
 
@@ -22,7 +22,16 @@ class CommentPage extends BaseClass {
         //await this.getComments();
         this.client = new CommentControllerClient();
 
-        this.dataStore.addChangeListener(this.renderComment)
+        try {
+            const allComments = await this.client.getAllComments();
+            console.log('Fetched comment list:', allComments);
+
+            this.dataStore.set("comments", allComments);
+
+            await this.renderComments();
+        } catch (error) {
+            console.error('Error fetching medication list:', error);
+        }
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
@@ -119,100 +128,100 @@ class CommentPage extends BaseClass {
     }
 
 
-    //    async renderComments() {
-//        const commentList = document.getElementById('commentList');
-//
-//        const comments = this.dataStore.get("comments");
-//
-//        if (comments) {
-//            commentList.innerHTML = '';
-//
-//            comments.forEach(comment => {
-//                const listItem = document.createElement('li');
-//                listItem.classList.add('comment');
-//
+        async renderComments() {
+        const commentList = document.getElementById('commentList');
+
+        const comments = this.dataStore.get("comments");
+
+        if (comments) {
+            commentList.innerHTML = '';
+
+            comments.forEach(comment => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('comment');
+
 //                const userAvatar = document.createElement('img');
 //                userAvatar.src = comment.profilePicture;
 //                userAvatar.alt = 'Profile Picture';
 //                userAvatar.classList.add('avatar');
-//
-//                const commentInfo = document.createElement('div');
-//                commentInfo.classList.add('comment-info');
-//
-//                const username = document.createElement('p');
-//                username.textContent = comment.username;
-//
-//                const commentText = document.createElement('p');
-//                commentText.textContent = comment.text;
-//
-//                commentInfo.appendChild(username);
-//                commentInfo.appendChild(commentText);
-//
-//                const likes = document.createElement('span');
-//                likes.classList.add('likes-btn');
-//                const thumbsUpBtn = document.createElement('button');
-//                thumbsUpBtn.classList.add('thumbs-up-btn');
-//                thumbsUpBtn.onclick = () => getLikesComment(comment.id);
-//
-//                // Toggle filled/outline appearance
-//                if (comment.liked) {
-//                    thumbsUpBtn.innerHTML = `<img src="https://img.icons8.com/ios-filled/24/FFFFFF/thumb-up--v1.png">`;
-//                } else {
-//                    thumbsUpBtn.innerHTML = '<img src="https://img.icons8.com/ios/24/FFFFFF/thumb-up--v1.png"/>';
-//                }
-//
-//                likes.appendChild(thumbsUpBtn);
-//                likes.appendChild(document.createTextNode(` ${comment.likes} Likes`));
-//
-//                const actions = document.createElement('div');
-//                actions.classList.add('actions');
-//
-//                const editButton = document.createElement('button');
-//                editButton.classList.add('edit-btn');
-//                editButton.innerHTML = '<img src="https://img.icons8.com/material/15/FAB005/edit--v1.png"style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"/>'
-//                editButton.onclick = () => editComment(comment.id);
-//
-//                const deleteButton = document.createElement('button');
-//                deleteButton.classList.add('delete-btn');
-//                deleteButton.innerHTML = '<img src="https://img.icons8.com/material-rounded/15/FA5252/delete-sign.png"style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"/>'
-//                deleteButton.onclick = () => deleteComment(comment.id);
-//
-//                actions.appendChild(editButton);
-//                actions.appendChild(deleteButton);
-//
+
+                const commentInfo = document.createElement('div');
+                commentInfo.classList.add('comment-info');
+
+                const username = document.createElement('p');
+                username.textContent = comment.userName;
+
+                const commentText = document.createElement('p');
+                commentText.textContent = comment.contents;
+
+                commentInfo.appendChild(username);
+                commentInfo.appendChild(commentText);
+
+                const likes = document.createElement('span');
+                likes.classList.add('likes-btn');
+                const thumbsUpBtn = document.createElement('button');
+                thumbsUpBtn.classList.add('thumbs-up-btn');
+                thumbsUpBtn.onclick = () => this.getLikesComment(comment.id);
+
+                // Toggle filled/outline appearance
+                if (comment.liked) {
+                    thumbsUpBtn.innerHTML = `<img src="https://img.icons8.com/ios-filled/24/FFFFFF/thumb-up--v1.png">`;
+                } else {
+                    thumbsUpBtn.innerHTML = '<img src="https://img.icons8.com/ios/24/FFFFFF/thumb-up--v1.png"/>';
+                }
+
+                likes.appendChild(thumbsUpBtn);
+                likes.appendChild(document.createTextNode(` ${comment.likes} Likes`));
+
+                const actions = document.createElement('div');
+                actions.classList.add('actions');
+
+                const editButton = document.createElement('button');
+                editButton.classList.add('edit-btn');
+                editButton.innerHTML = '<img src="https://img.icons8.com/material/15/FAB005/edit--v1.png"style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"/>'
+                editButton.onclick = () => editComment(comment.id);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-btn');
+                deleteButton.innerHTML = '<img src="https://img.icons8.com/material-rounded/15/FA5252/delete-sign.png"style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"/>'
+                deleteButton.onclick = () => deleteComment(comment.id);
+
+                actions.appendChild(editButton);
+                actions.appendChild(deleteButton);
+
 //                listItem.appendChild(userAvatar);
-//                listItem.appendChild(commentInfo);
-//                listItem.appendChild(likes);
-//                listItem.appendChild(actions);
-//
-//                commentList.appendChild(listItem);
-//            });
-//
-//            // Update the heading with the number of comments
-//            const commentsHeading = document.getElementById('commentsHeading');
-//            commentsHeading.innerHTML = `<u><h1>Comments (${comments.length})</h1></u>`;
-//
-//        } else {
-//            commentList.innerHTML = "No Comments";
-//        }
-//    }
+                listItem.appendChild(commentInfo);
+                listItem.appendChild(likes);
+                listItem.appendChild(actions);
+
+                commentList.appendChild(listItem);
+            });
+
+            // Update the heading with the number of comments
+            const commentsHeading = document.getElementById('commentsHeading');
+            commentsHeading.innerHTML = `<u><h1>Comments (${comments.length})</h1></u>`;
+
+        } else {
+            commentList.innerHTML = "No Comments";
+        }
+    }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
 
-//    async getAllComments() {
-//        // Prevent the page from refreshing on form submit
-//        event.preventDefault();
-//
-//        this.dataStore.set("comments", null);
-//
-//        let result = await this.client.getAllComments(this.errorHandler);
-//        this.dataStore.set("comments", result);
-//        if (result) {
-//            renderComments();
-//        } else {
-//            this.errorHandler("Error doing GET!  Try again...");
-//        }
-//    }
+    async getAllComments() {
+        // Prevent the page from refreshing on form submit
+        event.preventDefault();
+
+        this.dataStore.set("comments", null);
+
+        let result = await this.client.getAllComments(this.errorHandler);
+        this.dataStore.set("comments", result);
+        if (result) {
+            this.renderComments();
+        } else {
+            this.errorHandler("Error doing GET!  Try again...");
+        }
+    }
 
     async getLikesComment(commentId) {
     try {
@@ -234,7 +243,7 @@ class CommentPage extends BaseClass {
                 this.dataStore.set(`comment_${commentId}_likes`, comment.likes);
             }
 
-            renderComments();
+            this.renderComments();
         }
     } catch (error) {
         console.error("Error occurred while liking/unliking comment:", error);
@@ -251,7 +260,7 @@ class CommentPage extends BaseClass {
         let commentInput = document.getElementById("comment").value
 
         const createdComment = await this.client.createComment(usernameInput, commentInput, this.errorHandler);
-        this.dataStore.set("comment", createdComment);
+        this.dataStore.set("comments", createdComment);
 
         if (createdComment) {
             const newComment = {
@@ -268,8 +277,7 @@ class CommentPage extends BaseClass {
             comments.unshift(newComment);
 
             try {
-                // Your code here
-                await this.renderComment(); // Call the renderComments function using await
+                await this.getAllComments(); // Call the renderComments function using await
             } catch (error) {
                 console.error("Error occurred while rendering comments:", error);
             }

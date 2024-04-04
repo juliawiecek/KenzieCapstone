@@ -22,7 +22,7 @@ public class CommentRecord {
         return commentId;
     }
 
-    @DynamoDBRangeKey(attributeName = "UserId")
+    @DynamoDBAttribute(attributeName = "UserId")
     public String getUserId() {
         return userId;
     }

@@ -24,7 +24,8 @@ public class CommentService {
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
-    @CachePut(value = "comments", key = "#result.commentId") // cache newly created comment
+//    @CachePut(value = "comments", key = "#result.commentId") // cache newly created comment
+    @CacheEvict(value = "comments", allEntries = true)
     public CommentResponse createNewComment(CreateCommentRequest createCommentRequest) {
         CommentRecord record = new CommentRecord();
         record.setCommentId(UUID.randomUUID().toString());

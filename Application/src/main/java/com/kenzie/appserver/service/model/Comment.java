@@ -12,9 +12,14 @@ public class Comment {
     private long timestamp;
     private int likes;
 
-    public Comment(String userName, String contents) {
+    public Comment(String commentId, String userId, String userName, String contents, String episodeId, long timestamp, int likes) {
+        this.commentId = commentId;
+        this.userId = userId;
         this.userName = userName;
         this.contents = contents;
+        this.episodeId = episodeId;
+        this.timestamp = timestamp;
+        this.likes = likes;
     }
 
     public String getContents() {
