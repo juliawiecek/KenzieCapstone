@@ -88,7 +88,7 @@ class CommentPage extends BaseClass {
                 //thumbsUpBtn.setAttribute('id', 'thumbs-up-btn-id');
 
                 // Retrieve likesData from localStorage when the page is loaded
-                let likesData = comment.likes;
+                let likesData = localStorage.getItem(`comment_${comment.commentId}_likes`) || 0;
                 let liked = localStorage.getItem(`comment_${comment.commentId}_liked`) === 'true';
 
                 // Toggle filled/outline appearance
@@ -122,6 +122,7 @@ class CommentPage extends BaseClass {
                     // Update the likes data on the UI
                     likesData = await this.client.likeComment(comment.commentId, comment.likes, this.errorHandler);
                     likes.lastChild.nodeValue = ` ${likesData.likes} Likes`;
+                    localStorage.setItem(`comment_${comment.commentId}_likes`, likesData.likes);
                 };
 
                 const actions = document.createElement('div');
