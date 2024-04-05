@@ -51,8 +51,9 @@ public class CommentController {
 
 
     @PutMapping("/update/{commentId}") // added exception handling indirectly through service class created.
-    public ResponseEntity<CommentResponse> updateComment(@PathVariable String commentId, @RequestBody CreateCommentRequest request) {
-        CommentResponse updatedComment = commentService.updateComment(commentId, request); // if commentId is not found, updateComment will throw CommentNotFoundException.
+    public ResponseEntity<CommentResponse> updateComment(@PathVariable String commentId, @RequestBody Map<String, String> requestBody) {
+        String contents = requestBody.get("contents");
+        CommentResponse updatedComment = commentService.updateComment(commentId, contents); // if commentId is not found, updateComment will throw CommentNotFoundException.
         return ResponseEntity.ok(updatedComment);
     }
 

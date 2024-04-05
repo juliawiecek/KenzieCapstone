@@ -53,9 +53,9 @@ export default class CommentControllerClient extends BaseClass {
         }
     }
 
-    async updateComment(commentId, commentRequest, errorCallback) {
+    async updateComment(commentId, contents, errorCallback) {
         try {
-            const response = await this.client.put(`/api/comments/update/${commentId}`, commentRequest);//check api address
+            const response = await this.client.put(`/api/comments/update/${commentId}`, {contents});//check api address
             return response.data;
         } catch (error) {
             this.handleError("updateComment", error, errorCallback);

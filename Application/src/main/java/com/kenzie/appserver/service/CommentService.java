@@ -77,10 +77,9 @@ public class CommentService {
     }
 
     @CachePut(value = "comments", key = "#commentId") // update cache with updated comment
-    public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
+    public CommentResponse updateComment(String commentId, String contents) {
         return commentRepository.findById(commentId).map(existingRecord -> {
-            existingRecord.setUserName(request.getUserName());
-            existingRecord.setContents(request.getContents());
+            existingRecord.setContents(contents);
             commentRepository.save(existingRecord);
             return mapToCommentResponse(existingRecord);
         }).orElseThrow(() -> new CommentNotFoundException(commentId));

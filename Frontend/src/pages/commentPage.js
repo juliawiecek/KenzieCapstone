@@ -131,7 +131,19 @@ class CommentPage extends BaseClass {
                 const editButton = document.createElement('button');
                 editButton.classList.add('edit-btn');
                 editButton.innerHTML = '<img src="https://img.icons8.com/material/15/FAB005/edit--v1.png"style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"/>'
-                editButton.onclick = () => editComment(comment.id);
+                editButton.onclick = async () => {
+                    try {
+                        const updatedText = prompt('Edit your comment:', comment.contents);
+
+                        if (updatedText !== null) {
+                            commentText.contents = updatedText;
+                            commentText.textContent = updatedText;
+                            await this.client.updateComment(comment.commentId, commentText.contents, this.errorHandler);
+                        }
+                    } catch (error) {
+                        console.error('An error occurred:', error);
+                    }
+                }
 
                 const deleteButton = document.createElement('button');
                 deleteButton.classList.add('delete-btn');
@@ -205,6 +217,20 @@ class CommentPage extends BaseClass {
         // Handle error as needed
     }
 }
+
+//    // Function to edit a comment
+//    function editComment(commentId) {
+//       const comment = comments.find(c => c.id === commentId);
+//
+//       if (comment) {
+//          const updatedText = prompt('Edit your comment:', comment.text);
+//
+//          if (updatedText !== null) {
+//             comment.text = updatedText;
+//             renderComments();
+//          }
+//       }
+//    }
 
     async createComment(event) {
         // Prevent the page from refreshing on form submitk
