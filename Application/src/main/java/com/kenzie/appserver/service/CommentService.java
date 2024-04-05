@@ -68,17 +68,9 @@ public class CommentService {
         commentRepository.deleteById(commentId);
     }
 
-    public CommentResponse likeComment(String commentId) {
+    public CommentResponse likeComment(String commentId, int likes) {
         return commentRepository.findById(commentId).map(existingRecord -> {
-            existingRecord.addLike();
-            commentRepository.save(existingRecord);
-            return mapToCommentResponse(existingRecord);
-        }).orElseThrow(() -> new CommentNotFoundException(commentId));
-    }
-
-    public CommentResponse unLikeComment(String commentId) {
-        return commentRepository.findById(commentId).map(existingRecord -> {
-            existingRecord.removeLike();
+            existingRecord.setLikes(likes);
             commentRepository.save(existingRecord);
             return mapToCommentResponse(existingRecord);
         }).orElseThrow(() -> new CommentNotFoundException(commentId));

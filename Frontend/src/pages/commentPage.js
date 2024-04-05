@@ -52,83 +52,6 @@ class CommentPage extends BaseClass {
 //        }
 //    }
 
-//    async renderComment() {
-//        const commentList = document.getElementById('commentList');
-//
-//        const comment = this.dataStore.get("comment");
-//
-//        if (comment) {
-//            commentList.innerHTML = '';
-//
-//            const listItem = document.createElement('li');
-//            listItem.classList.add('comment');
-//
-////            const userAvatar = document.createElement('img');
-////            userAvatar.src = comment.profilePicture;
-////            userAvatar.alt = 'Profile Picture';
-////            userAvatar.classList.add('avatar');
-//
-//            const commentInfo = document.createElement('div');
-//            commentInfo.classList.add('comment-info');
-//
-//            const username = document.createElement('p');
-//            username.textContent = comment.userName;
-//
-//            const commentText = document.createElement('p');
-//            commentText.textContent = comment.contents;
-//
-//            commentInfo.appendChild(username);
-//            commentInfo.appendChild(commentText);
-//
-//            const likes = document.createElement('span');
-//            likes.classList.add('likes-btn');
-//            const thumbsUpBtn = document.createElement('button');
-//            thumbsUpBtn.classList.add('thumbs-up-btn');
-//            thumbsUpBtn.onclick = () => getLikesComment(comment.id);
-//
-//            // Toggle filled/outline appearance
-//            if (comment.liked) {
-//                thumbsUpBtn.innerHTML = `<img src="https://img.icons8.com/ios-filled/24/FFFFFF/thumb-up--v1.png">`;
-//            } else {
-//                thumbsUpBtn.innerHTML = '<img src="https://img.icons8.com/ios/24/FFFFFF/thumb-up--v1.png"/>';
-//            }
-//
-//            likes.appendChild(thumbsUpBtn);
-//            likes.appendChild(document.createTextNode(` ${comment.likes} Likes`));
-//
-//            const actions = document.createElement('div');
-//            actions.classList.add('actions');
-//
-//            const editButton = document.createElement('button');
-//            editButton.classList.add('edit-btn');
-//            editButton.innerHTML = '<img src="https://img.icons8.com/material/15/FAB005/edit--v1.png"style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"/>'
-//            editButton.onclick = () => editComment(comment.id);
-//
-//            const deleteButton = document.createElement('button');
-//            deleteButton.classList.add('delete-btn');
-//            deleteButton.innerHTML = '<img src="https://img.icons8.com/material-rounded/15/FA5252/delete-sign.png"style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"/>'
-//            deleteButton.onclick = () => deleteComment(comment.id);
-//
-//            actions.appendChild(editButton);
-//            actions.appendChild(deleteButton);
-//
-////            listItem.appendChild(userAvatar);
-//            listItem.appendChild(commentInfo);
-//            listItem.appendChild(likes);
-//            listItem.appendChild(actions);
-//
-//            commentList.appendChild(listItem);
-//
-//            // Update the heading to indicate a single comment
-//            const commentsHeading = document.getElementById('commentsHeading');
-//            commentsHeading.innerHTML = `<u><h1>Comments (1)</h1></u>`;
-//
-//        } else {
-//            commentList.innerHTML = "No Comments";
-//        }
-//    }
-
-
         async renderComments() {
         const commentList = document.getElementById('commentList');
 
@@ -163,17 +86,43 @@ class CommentPage extends BaseClass {
                 const thumbsUpBtn = document.createElement('button');
                 thumbsUpBtn.classList.add('thumbs-up-btn');
                 //thumbsUpBtn.setAttribute('id', 'thumbs-up-btn-id');
-                thumbsUpBtn.onclick = () => this.getLikesComment(comment, thumbsUpBtn, likes);
+
+                // Retrieve likesData from localStorage when the page is loaded
+                let likesData = comment.likes;
+                let liked = localStorage.getItem(`comment_${comment.commentId}_liked`) === 'true';
 
                 // Toggle filled/outline appearance
-                if (comment.liked) {
+                if (liked) {
                     thumbsUpBtn.innerHTML = `<img src="https://img.icons8.com/ios-filled/24/FFFFFF/thumb-up--v1.png">`;
                 } else {
                     thumbsUpBtn.innerHTML = '<img src="https://img.icons8.com/ios/24/FFFFFF/thumb-up--v1.png"/>';
                 }
 
                 likes.appendChild(thumbsUpBtn);
-                likes.appendChild(document.createTextNode(` ${comment.likes} Likes`));
+                likes.appendChild(document.createTextNode(` ${likesData} Likes`));
+
+
+                thumbsUpBtn.onclick = async () => {
+                    // Toggle the liked status
+                    let liked = localStorage.getItem(`comment_${comment.commentId}_liked`) === 'true';
+                    liked = !liked;
+
+                    // Update the appearance of thumbsUpBtn based on the liked status
+                    thumbsUpBtn.innerHTML = liked ? `<img src="https://img.icons8.com/ios-filled/24/FFFFFF/thumb-up--v1.png">` : '<img src="https://img.icons8.com/ios/24/FFFFFF/thumb-up--v1.png"/>';
+
+                    // Store the updated liked status in localStorage
+                    localStorage.setItem(`comment_${comment.commentId}_liked`, liked.toString());
+
+                    // Update the likes count based on the liked status
+                    comment.likes = liked ? comment.likes + 1 : Math.max(comment.likes - 1, 0);
+
+                    // Update the likes count in localStorage
+                    this.dataStore.set(`comment_${comment.commentId}_likes`, comment.likes);
+
+                    // Update the likes data on the UI
+                    likesData = await this.client.likeComment(comment.commentId, comment.likes, this.errorHandler);
+                    likes.lastChild.nodeValue = ` ${likesData.likes} Likes`;
+                };
 
                 const actions = document.createElement('div');
                 actions.classList.add('actions');
@@ -234,27 +183,21 @@ class CommentPage extends BaseClass {
         const textNode = Array.from(likes.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
 
         if (currentComment && textNode) {
-            // Toggle filled/outline appearance
-            if (!currentComment.liked) {
-                await this.client.likeComment(comment.commentId, this.errorHandler);
+            if (thumbsUpBtn.innerHTML !== `<img src="https://img.icons8.com/ios-filled/24/FFFFFF/thumb-up--v1.png">`) {
                 currentComment.likes++;
                 currentComment.liked = true;
                 thumbsUpBtn.innerHTML = `<img src="https://img.icons8.com/ios-filled/24/FFFFFF/thumb-up--v1.png">`;
-                // Update likes in the datastore
-                this.dataStore.set(`comment_${comment.commentId}_likes`, currentComment.likes);
-                const likesData = this.dataStore.get(`comment_${comment.commentId}_likes`);
-                textNode.textContent = ` ${likesData} Likes`;
             } else {
-                await this.client.unLikeComment(comment.commentId, this.errorHandler);
                 currentComment.likes--;
                 currentComment.liked = false;
                 thumbsUpBtn.innerHTML = '<img src="https://img.icons8.com/ios/24/FFFFFF/thumb-up--v1.png"/>';
-                // Update likes in the datastore
-                this.dataStore.set(`comment_${comment.commentId}_likes`, currentComment.likes);
-                const likesData = this.dataStore.get(`comment_${comment.commentId}_likes`);
-                textNode.textContent = ` ${likesData} Likes`;
             }
 
+            this.dataStore.set(`comment_${comment.commentId}_likes`, currentComment.likes);
+            const likesData = await this.client.likeComment(comment.commentId, currentComment.likes, this.errorHandler);
+            textNode.textContent = ` ${likesData.likes} Likes`;
+
+            return likesData.likes; // Return just the likes value
         }
     } catch (error) {
         console.error("Error occurred while liking/unliking comment:", error);

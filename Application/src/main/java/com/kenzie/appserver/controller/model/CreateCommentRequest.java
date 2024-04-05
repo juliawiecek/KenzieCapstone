@@ -17,6 +17,9 @@ public class CreateCommentRequest {
     @NotEmpty
     @JsonProperty("episodeId")
     private String episodeId;
+    @NotEmpty
+    @JsonProperty("likes")
+    private int likes;
 
     public CreateCommentRequest() {
 
@@ -38,6 +41,13 @@ public class CreateCommentRequest {
         return userName;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
     public void setContents(String contents) {
         this.contents = contents;
     }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -56,15 +57,10 @@ public class CommentController {
     }
 
     @PutMapping("/update/{commentId}/likes")
-    public ResponseEntity<CommentResponse> likeComment(@PathVariable String commentId) {
-        CommentResponse likedComment = commentService.likeComment(commentId);
+    public ResponseEntity<CommentResponse> likeComment(@PathVariable String commentId, @RequestBody Map<String, Integer> requestBody) {
+        int likes = requestBody.get("likes");
+        CommentResponse likedComment = commentService.likeComment(commentId, likes);
         return ResponseEntity.ok(likedComment);
-    }
-
-    @DeleteMapping("/update/{commentId}/likes")
-    public ResponseEntity<CommentResponse> unLikeComment(@PathVariable String commentId) {
-        CommentResponse unLikedComment = commentService.unLikeComment(commentId);
-        return ResponseEntity.ok(unLikedComment);
     }
 
 }
