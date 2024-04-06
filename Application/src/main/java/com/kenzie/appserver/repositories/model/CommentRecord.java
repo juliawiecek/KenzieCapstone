@@ -7,7 +7,6 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "CommentTable")
 public class CommentRecord {
-//    @Id
     private String commentId;
     private String userId;
     private String userName;
