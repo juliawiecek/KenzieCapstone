@@ -33,6 +33,19 @@ class CommentPage extends BaseClass {
         } catch (error) {
             console.error('Error fetching medication list:', error);
         }
+
+        // Filter out deleted comments on page load
+        window.addEventListener('load', () => {
+            let deletedComments = JSON.parse(localStorage.getItem('deletedComments')) || [];
+
+            // Remove deleted comments from the data store on page load
+            deletedComments.forEach((deletedCommentId) => {
+                delete this.dataStore[deletedCommentId];
+            });
+
+            // Optionally, you can also filter out deleted comments from being displayed on the page
+            // For example, when rendering comments, exclude the deleted comments based on this information
+        });
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
@@ -148,7 +161,22 @@ class CommentPage extends BaseClass {
                 const deleteButton = document.createElement('button');
                 deleteButton.classList.add('delete-btn');
                 deleteButton.innerHTML = '<img src="https://img.icons8.com/material-rounded/15/FA5252/delete-sign.png"style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"/>'
-                deleteButton.onclick = () => deleteComment(comment.id);
+                deleteButton.onclick = async () => {
+                    const selector = '[comment-id="' + comment.commentId + '"]';
+                    const commentElement = document.querySelector(selector);
+                    commentElement.remove();
+
+                    // Store the deleted comment ID in local storage
+                    let deletedComments = JSON.parse(localStorage.getItem('deletedComments')) || [];
+                    deletedComments.push(comment.commentId);
+                    localStorage.setItem('deletedComments', JSON.stringify(deletedComments));
+
+                    // Remove the comment from the dataStore
+                    delete this.dataStore[comment.commentId];
+
+                    // Send a request to delete the comment on the server
+                    await this.client.deleteComment(comment.commentId, this.errorHandler);
+                }
 
                 listItem.setAttribute('comment-id', comment.commentId);
 

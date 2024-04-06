@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/shows")
+@RequestMapping("/shows")
 public class TVShowController {
 
     private final ShowService showService;
@@ -32,7 +32,6 @@ public class TVShowController {
             ShowInfoResponse showInfoResponse = new ShowInfoResponse(showInfo.getName(), showInfo.getGenres(),
                     showInfo.getRating(), showInfo.getImage(), showInfo.getSummary());
             showInfoResponseList.add(showInfoResponse);
-            showInfoList.add(showInfo);
         }
         return showInfoResponseList;
     }
@@ -43,7 +42,7 @@ public class TVShowController {
         return ResponseEntity.ok(showInfoResponseList);
     }
 
-    @GetMapping("/{query}")
+    @GetMapping("/search/{query}")
     public ResponseEntity<List<ShowInfoResponse>> getShow(@PathVariable("query") String query) {
         List<ShowInfoResponse> showInfoResponseList = convertToShowInfoResponseList((showService.getShow(query)));
         return ResponseEntity.ok(showInfoResponseList);
@@ -63,7 +62,6 @@ public class TVShowController {
             EpisodeResponse episodeResponse = new EpisodeResponse(episode.getName(), episode.getEpisodeOrder(),
                     episode.getNumber(), episode.getRuntime(), episode.getImage(), episode.getSummary());
             episodeResponseList.add(episodeResponse);
-            episodeList.add(episode);
         }
         return episodeResponseList;
     }

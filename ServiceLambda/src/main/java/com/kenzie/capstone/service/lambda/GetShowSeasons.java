@@ -15,10 +15,10 @@ import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.Logger;
 
 public class GetShowSeasons implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-    static final Logger log = (Logger) LogManager.getLogger();
+    static final Logger log = LogManager.getLogger();
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
         GsonBuilder builder = new GsonBuilder();
