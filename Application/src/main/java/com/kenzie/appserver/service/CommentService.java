@@ -24,7 +24,8 @@ public class CommentService {
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
-    @CachePut(value = "comments", key = "#result.commentId") // cache newly created comment
+//    @CachePut(value = "comments", key = "#result.commentId") // cache newly created comment
+    @CacheEvict(value = "comments", allEntries = true)
     public CommentResponse createNewComment(CreateCommentRequest createCommentRequest) {
         CommentRecord record = new CommentRecord();
         record.setCommentId(UUID.randomUUID().toString());
@@ -67,27 +68,18 @@ public class CommentService {
         commentRepository.deleteById(commentId);
     }
 
-    public CommentResponse likeComment(String commentId) {
+    public CommentResponse likeComment(String commentId, int likes) {
         return commentRepository.findById(commentId).map(existingRecord -> {
-            existingRecord.addLike();
-            commentRepository.save(existingRecord);
-            return mapToCommentResponse(existingRecord);
-        }).orElseThrow(() -> new CommentNotFoundException(commentId));
-    }
-
-    public CommentResponse unLikeComment(String commentId) {
-        return commentRepository.findById(commentId).map(existingRecord -> {
-            existingRecord.removeLike();
+            existingRecord.setLikes(likes);
             commentRepository.save(existingRecord);
             return mapToCommentResponse(existingRecord);
         }).orElseThrow(() -> new CommentNotFoundException(commentId));
     }
 
     @CachePut(value = "comments", key = "#commentId") // update cache with updated comment
-    public CommentResponse updateComment(String commentId, CreateCommentRequest request) {
+    public CommentResponse updateComment(String commentId, String contents) {
         return commentRepository.findById(commentId).map(existingRecord -> {
-            existingRecord.setUserName(request.getUserName());
-            existingRecord.setContents(request.getContents());
+            existingRecord.setContents(contents);
             commentRepository.save(existingRecord);
             return mapToCommentResponse(existingRecord);
         }).orElseThrow(() -> new CommentNotFoundException(commentId));

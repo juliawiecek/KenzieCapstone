@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/shows")
+@RequestMapping("/shows")
 public class TVShowController {
 
     private final ShowService showService;
@@ -45,7 +45,7 @@ public class TVShowController {
         return ResponseEntity.ok(showInfoResponseList);
     }
 
-    @GetMapping("/{query}")
+    @GetMapping("/search/{query}")
     public ResponseEntity<List<ShowInfoResponse>> getShow(@PathVariable("query") String query) {
         List<ShowInfoResponse> showInfoResponseList = convertToShowInfoResponseList(showService.getShow(query));
         if (showInfoResponseList.isEmpty()) {

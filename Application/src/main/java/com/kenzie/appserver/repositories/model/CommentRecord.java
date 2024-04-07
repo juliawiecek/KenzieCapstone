@@ -77,14 +77,6 @@ public class CommentRecord {
         this.likes = likes;
     }
 
-    public void addLike() {
-        this.likes += 1;
-    }
-
-    public void removeLike() {
-        this.likes -= 1;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

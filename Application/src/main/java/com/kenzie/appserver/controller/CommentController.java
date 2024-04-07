@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -50,21 +51,17 @@ public class CommentController {
 
 
     @PutMapping("/update/{commentId}") // added exception handling indirectly through service class created.
-    public ResponseEntity<CommentResponse> updateComment(@PathVariable String commentId, @RequestBody CreateCommentRequest request) {
-        CommentResponse updatedComment = commentService.updateComment(commentId, request); // if commentId is not found, updateComment will throw CommentNotFoundException.
+    public ResponseEntity<CommentResponse> updateComment(@PathVariable String commentId, @RequestBody Map<String, String> requestBody) {
+        String contents = requestBody.get("contents");
+        CommentResponse updatedComment = commentService.updateComment(commentId, contents); // if commentId is not found, updateComment will throw CommentNotFoundException.
         return ResponseEntity.ok(updatedComment);
     }
 
     @PutMapping("/update/{commentId}/likes")
-    public ResponseEntity<CommentResponse> likeComment(@PathVariable String commentId) {
-        CommentResponse likedComment = commentService.likeComment(commentId);
+    public ResponseEntity<CommentResponse> likeComment(@PathVariable String commentId, @RequestBody Map<String, Integer> requestBody) {
+        int likes = requestBody.get("likes");
+        CommentResponse likedComment = commentService.likeComment(commentId, likes);
         return ResponseEntity.ok(likedComment);
-    }
-
-    @DeleteMapping("/update/{commentId}/likes")
-    public ResponseEntity<CommentResponse> unLikeComment(@PathVariable String commentId) {
-        CommentResponse unLikedComment = commentService.unLikeComment(commentId);
-        return ResponseEntity.ok(unLikedComment);
     }
 
 }

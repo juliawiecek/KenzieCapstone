@@ -63,12 +63,12 @@ import java.util.List;
 
 public class TVShowServiceClient {
 
-    private static final String GET_POPULAR_SHOWS_ENDPOINT = "/shows";
-    private static final String SEARCH_SHOWS_ENDPOINT = "/search/shows?q={query}";
-    private static final String GET_SHOW_INFO_ENDPOINT = "/shows/{id}";
-    private static final String GET_SHOW_IMAGES_ENDPOINT = "/shows/{id}/images";
-    private static final String GET_SHOW_SEASONS_ENDPOINT = "/shows/{id}/seasons";
-    private static final String GET_SHOW_EPISODE_LIST_ENDPOINT = "/seasons/{id}/episodes";
+    private static final String GET_POPULAR_SHOWS_ENDPOINT = "/shows/popular";
+    private static final String SEARCH_SHOWS_ENDPOINT = "/shows/search/{query}";
+    private static final String GET_SHOW_INFO_ENDPOINT = "/shows/info/{id}";
+    private static final String GET_SHOW_IMAGES_ENDPOINT = "/shows/images/{id}";
+    private static final String GET_SHOW_SEASONS_ENDPOINT = "/shows/seasons/{id}";
+    private static final String GET_SHOW_EPISODE_LIST_ENDPOINT = "/shows/episodes/{id}";
 
     private ObjectMapper mapper;
 

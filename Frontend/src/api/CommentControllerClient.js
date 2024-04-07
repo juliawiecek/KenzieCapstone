@@ -53,30 +53,21 @@ export default class CommentControllerClient extends BaseClass {
         }
     }
 
-    async updateComment(commentId, commentRequest, errorCallback) {
+    async updateComment(commentId, contents, errorCallback) {
         try {
-            const response = await this.client.put(`/api/comments/update/${commentId}`, commentRequest);//check api address
+            const response = await this.client.put(`/api/comments/update/${commentId}`, {contents});//check api address
             return response.data;
         } catch (error) {
             this.handleError("updateComment", error, errorCallback);
         }
     }
 
-    async likeComment(commentId, errorCallback) {
+    async likeComment(commentId, likes, errorCallback) {
         try {
-            const response = await this.client.put(`/api/comments/update/${commentId}/likes`);
+            const response = await this.client.put(`/api/comments/update/${commentId}/likes`, {likes});
             return response.data;
         } catch (error) {
             this.handleError("likeComment", error, errorCallback);
-        }
-    }
-
-    async unLikeComment(commentId, errorCallback) {
-        try {
-            const response = await this.client.delete(`/api/comments/update/${commentId}/likes`);
-            return response.data;
-        } catch (error) {
-            this.handleError("unLikeComment", error, errorCallback);
         }
     }
 
