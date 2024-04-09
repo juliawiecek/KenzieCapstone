@@ -18,36 +18,34 @@ public class TVShowService {
     public TVShowService(TVShowDao tvShowDao){
         this.tvShowDao = tvShowDao;
     }
-    public List<ShowInfoData> getPopularShows(){
+    public List<ShowInfoResponse> getPopularShows(){
         String popularShows = tvShowDao.getPopularShowsFromAPI();
         List<ShowInfoResponse> response = jsonStringToResponseConverter.convertToShowInfoListResponse(popularShows);
-        return response.stream().map(ShowInfoResponse::getShowInfoData).collect(Collectors.toList());
+        return response;
     }
-    public List<ShowInfoData> getShow(String query) {
+    public List<ShowInfoResponse> getShow(String query) {
         String requestedShow = tvShowDao.getShowFromAPI(query);
-        List<ShowInfoResponse> response = jsonStringToResponseConverter.convertToShowInfoListResponse(requestedShow);
-        return response.stream().map(ShowInfoResponse::getShowInfoData).collect(Collectors.toList());
+        List<ShowInfoResponse> response = jsonStringToResponseConverter.queryConvertToShowInfoListResponse(requestedShow);
+        return response;
     }
-    public ShowInfoData getShowInfo(String id) {
+    public ShowInfoResponse getShowInfo(String id) {
         String showInfo = tvShowDao.getShowInfoFromAPI(id);
         ShowInfoResponse response = jsonStringToResponseConverter.convertToShowInfoResponse(showInfo);
-        return new ShowInfoData(response.getName(), response.getGenres(), response.getRating(), response.getImage(),
-                response.getSummary());
+        return response;
     }
-    public List<EpisodeData> getShowEpisodesForSeason(String id){
+    public List<EpisodeResponse> getShowEpisodesForSeason(String id){
         String episodeList = tvShowDao.getShowEpisodesForSeasonFromAPI(id);
         List<EpisodeResponse> response = jsonStringToResponseConverter.convertToEpisodeListResponse(episodeList);
-        return response.stream().map(EpisodeResponse::getEpisodeData).collect(Collectors.toList());
+        return response;
     }
-    public ImageData getShowImages(String id){
+    public List<ImageResponse> getShowImages(String id){
         String showImages = tvShowDao.getShowImagesFromAPI(id);
-        ImageResponse response = jsonStringToResponseConverter.convertToImageResponse(showImages);
-        return new ImageData(response.getId(), response.getType(), response.isMain(), response.getResolutions());
+        List<ImageResponse> response = jsonStringToResponseConverter.convertToImageResponse(showImages);
+        return response;
     }
-    public EpisodeData getShowSeasons(String id){
+    public List<SeasonsResponse> getShowSeasons(String id){
         String showSeasons = tvShowDao.getShowSeasonsFromAPI(id);
-        EpisodeResponse response = jsonStringToResponseConverter.convertToEpisodeResponse(showSeasons);
-        return new EpisodeData(response.getName(), response.getEpisodeOrder(), response.getNumber(), response.getRuntime(),
-                response.getImage(), response.getSummary());
+        List<SeasonsResponse> response = jsonStringToResponseConverter.convertToSeasonsListResponse(showSeasons);
+        return response;
     }
 }

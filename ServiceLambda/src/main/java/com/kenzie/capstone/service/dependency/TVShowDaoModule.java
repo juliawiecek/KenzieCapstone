@@ -22,7 +22,7 @@ public class TVShowDaoModule {
     @Provides
     @Named("TVShowDao")
     @Inject
-    public TVShowDao provideTVShowDao(@Named("DynamoDBMapper")DynamoDBMapper mapper){
-        return new TVShowDao(mapper);
+    public TVShowDao provideTVShowDao(){
+        return new TVShowDao();
     }
 }

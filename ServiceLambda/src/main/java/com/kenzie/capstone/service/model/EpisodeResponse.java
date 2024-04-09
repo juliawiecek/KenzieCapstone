@@ -7,29 +7,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class EpisodeResponse {
     @JsonProperty("name")
     private String name;
-    @JsonProperty("episodeOrder")
-    private int episodeOrder;
+    @JsonProperty("season")
+    private int season;
     @JsonProperty("number")
     private int number;
     @JsonProperty("runtime")
     private int runtime;
     @JsonProperty("image")
-    private String image;
+    private Image image;
     @JsonProperty("summary")
     private String summary;
 
-    public EpisodeResponse(String name, int episodeOrder, int number, int runtime, String image, String summary) {
+    public EpisodeResponse(String name, int season, int number, int runtime, Image image, String summary) {
         this.name = name;
-        this.episodeOrder = episodeOrder;
+        this.season = season;
         this.number = number;
         this.runtime = runtime;
         this.image = image;
         this.summary = summary;
     }
 
-    public EpisodeData getEpisodeData() {
-        return new EpisodeData(name, episodeOrder, number, runtime, image, summary);
-    }
 
     public String getName() {
         return name;
@@ -39,12 +36,12 @@ public class EpisodeResponse {
         this.name = name;
     }
 
-    public int getEpisodeOrder() {
-        return episodeOrder;
+    public int getSeason() {
+        return season;
     }
 
-    public void setEpisodeOrder(int episodeOrder) {
-        this.episodeOrder = episodeOrder;
+    public void setSeason(int season) {
+        this.season = season;
     }
 
     public int getNumber() {
@@ -63,11 +60,11 @@ public class EpisodeResponse {
         this.runtime = runtime;
     }
 
-    public String getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 
@@ -77,5 +74,28 @@ public class EpisodeResponse {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public static class Image {
+        @JsonProperty("medium")
+        private String medium;
+        @JsonProperty("original")
+        private String original;
+
+        public String getMedium() {
+            return medium;
+        }
+
+        public void setMedium(String medium) {
+            this.medium = medium;
+        }
+
+        public String getOriginal() {
+            return original;
+        }
+
+        public void setOriginal(String original) {
+            this.original = original;
+        }
     }
 }

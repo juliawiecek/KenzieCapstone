@@ -7,29 +7,14 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ImageResponse {
-    @JsonProperty("id")
-    private String id;
     @JsonProperty("type")
     private String type;
-    @JsonProperty("main")
-    private boolean main;
-    // Ask Julia about this
     @JsonProperty("resolutions")
-    private List<String> resolutions;
+    private Resolutions resolutions;
 
-    public ImageResponse(String id, String type, boolean main, List<String> resolutions) {
-        this.id = id;
+    public ImageResponse(String type, Resolutions resolutions) {
         this.type = type;
-        this.main = main;
         this.resolutions = resolutions;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getType() {
@@ -40,19 +25,37 @@ public class ImageResponse {
         this.type = type;
     }
 
-    public boolean isMain() {
-        return main;
-    }
-
-    public void setMain(boolean main) {
-        this.main = main;
-    }
-
-    public List<String> getResolutions() {
+    public Resolutions getResolutions() {
         return resolutions;
     }
 
-    public void setResolutions(List<String> resolutions) {
+    public void setResolutions(Resolutions resolutions) {
         this.resolutions = resolutions;
+    }
+
+    public static class Resolutions {
+        @JsonProperty("original")
+        private Original original;
+
+        public Original getOriginal() {
+            return original;
+        }
+
+        public void setOriginal(Original original) {
+            this.original = original;
+        }
+
+        public static class Original {
+            @JsonProperty("url")
+            private String url;
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+        }
     }
 }

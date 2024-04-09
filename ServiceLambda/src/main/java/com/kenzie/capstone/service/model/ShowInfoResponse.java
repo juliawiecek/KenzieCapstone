@@ -12,23 +12,21 @@ public class ShowInfoResponse {
     @JsonProperty("genres")
     private List<String> genres;
     @JsonProperty("rating")
-    private Double rating;
+    private Rating rating;
     @JsonProperty("image")
-    private List<String> image;
+    private Image image;
     @JsonProperty("summary")
     private String summary;
+    @JsonProperty("id")
+    private int id;
 
-    public ShowInfoResponse(String name, List<String> genres, Double rating, List<String> image, String summary) {
+    public ShowInfoResponse(String name, List<String> genres, Rating rating, Image image, String summary, int id) {
         this.name = name;
         this.genres = genres;
         this.rating = rating;
         this.image = image;
         this.summary = summary;
-    }
-
-    public ShowInfoData getShowInfoData() {
-        // Return the show info data
-        return new ShowInfoData(name, genres, rating, image, summary);
+        this.id = id;
     }
 
     public String getName() {
@@ -51,23 +49,63 @@ public class ShowInfoResponse {
         return summary;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setSummary(String summary) {
         this.summary = summary;
     }
 
-    public Double getRating() {
+    public Rating getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(Rating rating) {
         this.rating = rating;
     }
 
-    public List<String> getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(List<String> image) {
-        this.image = image;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static class Rating {
+        @JsonProperty("average")
+        private Double average;
+
+        public Double getAverage() {
+            return average;
+        }
+
+        public void setAverage(Double average) {
+            this.average = average;
+        }
+    }
+
+    public static class Image {
+        @JsonProperty("medium")
+        private String medium;
+        @JsonProperty("original")
+        private String original;
+
+        public String getMedium() {
+            return medium;
+        }
+
+        public void setMedium(String medium) {
+            this.medium = medium;
+        }
+
+        public String getOriginal() {
+            return original;
+        }
+
+        public void setOriginal(String original) {
+            this.original = original;
+        }
     }
 }
