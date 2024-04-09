@@ -46,7 +46,7 @@ public class GetShowEpisodesForSeason implements RequestHandler<APIGatewayProxyR
 
         try {
 
-            List<EpisodeData> episodeResponses = tvShowService.getShowEpisodesForSeason(id);
+            List<EpisodeResponse> episodeResponses = tvShowService.getShowEpisodesForSeason(id);
             String output = gson.toJson(episodeResponses);
 
             return response

@@ -14,6 +14,7 @@ import com.kenzie.capstone.service.model.ImageResponse;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
@@ -45,7 +46,7 @@ public class GetShowImages implements RequestHandler<APIGatewayProxyRequestEvent
 
         try {
 
-            ImageData imageResponse = tvShowService.getShowImages(id);
+            List<ImageResponse> imageResponse = tvShowService.getShowImages(id);
             String output = gson.toJson(imageResponse);
 
             return response

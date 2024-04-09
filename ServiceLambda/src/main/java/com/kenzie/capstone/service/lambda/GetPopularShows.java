@@ -47,7 +47,7 @@ public class GetPopularShows implements RequestHandler<APIGatewayProxyRequestEve
 
         try {
 
-            List<ShowInfoData> showInfoResponse = tvShowService.getPopularShows();
+            List<ShowInfoResponse> showInfoResponse = tvShowService.getPopularShows();
             String output = gson.toJson(showInfoResponse);
 
             return response

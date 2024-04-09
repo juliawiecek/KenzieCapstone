@@ -45,7 +45,7 @@ public class GetShowInfo implements RequestHandler<APIGatewayProxyRequestEvent, 
 
         try {
 
-            ShowInfoData showInfoResponse = tvShowService.getShowInfo(id);
+            ShowInfoResponse showInfoResponse = tvShowService.getShowInfo(id);
             String output = gson.toJson(showInfoResponse);
 
             return response

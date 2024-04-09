@@ -46,7 +46,7 @@ public class GetShow implements RequestHandler<APIGatewayProxyRequestEvent, APIG
 
         try {
 
-            List<ShowInfoData> showInfoResponseList = tvShowService.getShow(query);
+            List<ShowInfoResponse> showInfoResponseList = tvShowService.getShow(query);
             String output = gson.toJson(showInfoResponseList);
 
             return response

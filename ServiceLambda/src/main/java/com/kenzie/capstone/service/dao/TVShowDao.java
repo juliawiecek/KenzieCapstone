@@ -16,30 +16,17 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class TVShowDao {
-    private DynamoDBMapper mapper;
+
     private static String api = "https://api.tvmaze.com";
+
+    public TVShowDao() {
+    }
 
     /**
      * Allows access to and manipulation of Match objects from the data store.
      * @param mapper Access to DynamoDB
      */
-    public TVShowDao(DynamoDBMapper mapper) {
-        this.mapper = mapper;
-    }
 
-    public List<ShowInfoData> storeListOfShowInfoData(List<ShowInfoData> listOfShowInfoData) {
-        try {
-            mapper.save(listOfShowInfoData, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "id",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-        } catch (ConditionalCheckFailedException e) {
-            throw new IllegalArgumentException("id has already been used");
-        }
-
-        return listOfShowInfoData;
-    }
 
     public String getPopularShowsFromAPI() {
         String endpoint = "/shows";
@@ -57,6 +44,7 @@ public class TVShowDao {
 
             int statusCode = httpResponse.statusCode();
             if (statusCode == 200) {
+                System.out.println(httpResponse.body());
                 return httpResponse.body();
             } else {
                 throw new ApiGatewayException("GET request failed: " + statusCode + " status code received"

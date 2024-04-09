@@ -11,9 +11,11 @@ import com.kenzie.capstone.service.dependency.DaggerTVShowServiceComponent;
 import com.kenzie.capstone.service.dependency.TVShowServiceComponent;
 import com.kenzie.capstone.service.model.EpisodeData;
 import com.kenzie.capstone.service.model.EpisodeResponse;
+import com.kenzie.capstone.service.model.SeasonsResponse;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.apache.logging.log4j.Logger;
 
@@ -44,8 +46,8 @@ public class GetShowSeasons implements RequestHandler<APIGatewayProxyRequestEven
 
         try {
             // need to put service call here
-            EpisodeData episodeResponse = tvShowService.getShowSeasons(id);
-            String output = gson.toJson(episodeResponse);
+            List<SeasonsResponse> seasonsResponse = tvShowService.getShowSeasons(id);
+            String output = gson.toJson(seasonsResponse);
 
             return response
                     .withStatusCode(200)

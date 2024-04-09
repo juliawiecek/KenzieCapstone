@@ -76,28 +76,28 @@ public class TVShowServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-    public List<ShowInfoData> getPopularShows() {
+    public List<ShowInfoResponse> getPopularShows() {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint(GET_POPULAR_SHOWS_ENDPOINT);
-        ShowInfoData[] showInfoData;
+        ShowInfoResponse[] showInfoResponse;
         try {
-            showInfoData = mapper.readValue(response, ShowInfoData[].class);
+            showInfoResponse = mapper.readValue(response, ShowInfoResponse[].class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
-        return Arrays.asList(showInfoData);
+        return Arrays.asList(showInfoResponse);
     }
 
-    public List<ShowInfoData> searchShows(String query) {
+    public List<ShowInfoResponse> searchShows(String query) {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint(SEARCH_SHOWS_ENDPOINT.replace("{query}", query));
-        ShowInfoData[] showInfoData;
+        ShowInfoResponse[] showInfoResponse;
         try {
-            showInfoData = mapper.readValue(response, ShowInfoData[].class);
+            showInfoResponse = mapper.readValue(response, ShowInfoResponse[].class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
-        return Arrays.asList(showInfoData);
+        return Arrays.asList(showInfoResponse);
     }
 
     public ShowInfoData getShowInfo(String id) {

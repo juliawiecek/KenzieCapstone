@@ -1,7 +1,9 @@
 package com.kenzie.appserver.config;
 
 
+import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.client.TVShowServiceClient;
+import com.kenzie.capstone.service.dao.TVShowDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class LambdaServiceClientConfiguration {
 
     @Bean
-    public TVShowServiceClient referralServiceClient() {
-        return new TVShowServiceClient();
+    public TVShowService referralService() {
+        return new TVShowService(new TVShowDao());
     }
 }
