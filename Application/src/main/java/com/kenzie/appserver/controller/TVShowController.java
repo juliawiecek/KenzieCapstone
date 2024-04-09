@@ -1,16 +1,10 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.service.model.Episode;
-import com.kenzie.appserver.service.model.Image;
-import com.kenzie.appserver.service.model.ShowInfo;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

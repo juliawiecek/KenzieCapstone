@@ -1,19 +1,10 @@
 package com.kenzie.capstone.service.dao;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
-import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
-import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
-import com.google.common.collect.ImmutableMap;
-
-import com.kenzie.capstone.service.model.ShowInfoData;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 
 public class TVShowDao {
 
