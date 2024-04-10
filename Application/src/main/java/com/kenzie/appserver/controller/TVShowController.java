@@ -5,6 +5,7 @@ import com.kenzie.capstone.service.client.TVShowLambdaServiceClient;
 import com.kenzie.capstone.service.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class TVShowController {
 
     @GetMapping("/search/{query}")
     public ResponseEntity<List<ShowInfoData>> getShow(@PathVariable("query") String query) {
-        List<ShowInfoData> showInfoDataList = tvShowServiceClient.getSearchedShows(query);
+        String encodedQuery = UriComponentsBuilder.fromUriString(query).build().encode().toUriString();
+        List<ShowInfoData> showInfoDataList = tvShowServiceClient.getSearchedShows(encodedQuery);
         return ResponseEntity.ok(showInfoDataList);
     }
 

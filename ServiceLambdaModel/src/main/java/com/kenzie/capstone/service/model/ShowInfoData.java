@@ -80,6 +80,8 @@ public class ShowInfoData {
         @JsonProperty("average")
         private Double average;
 
+        public Rating() {
+        }
         public Rating(Double average) {
             this.average = average;
         }
@@ -98,6 +100,9 @@ public class ShowInfoData {
         private String medium;
         @JsonProperty("original")
         private String original;
+
+        public Image() {
+        }
 
         public Image(String medium, String original) {
             this.medium = medium;

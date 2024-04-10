@@ -77,6 +77,14 @@ public class ShowInfoResponse {
         @JsonProperty("average")
         private Double average;
 
+        public Rating() {
+        }
+
+        public Rating(Double average) {
+            this.average = average;
+        }
+
+
         public Double getAverage() {
             return average;
         }
@@ -91,6 +99,15 @@ public class ShowInfoResponse {
         private String medium;
         @JsonProperty("original")
         private String original;
+
+        public Image() {
+
+        }
+
+        public Image(String medium, String original) {
+            this.medium = medium;
+            this.original = original;
+        }
 
         public String getMedium() {
             return medium;
