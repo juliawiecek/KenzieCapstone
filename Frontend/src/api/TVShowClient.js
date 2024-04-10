@@ -20,7 +20,7 @@ export default class TVShowClient extends BaseClass {
 
     async getPopular(errorCallback) {
         try {
-            const response = await this.client.get(`/api/shows/popular`);
+            const response = await this.client.get(`/shows/popular`);
             return response.data;
         } catch (error) {
             this.handleError("getPopular", error, errorCallback);
@@ -29,7 +29,7 @@ export default class TVShowClient extends BaseClass {
 
     async getShow(query, errorCallback) {
         try {
-            const response = await this.client.get(`/api/shows/${query}`);
+            const response = await this.client.get(`/shows/search/${query}`);
             return response.data;
         } catch (error) {
             this.handleError("getShow", error, errorCallback);
@@ -38,7 +38,7 @@ export default class TVShowClient extends BaseClass {
 
     async getShowInfo(id, errorCallback) {
         try {
-            const response = await this.client.get(`/api/shows/info/${id}`);
+            const response = await this.client.get(`/shows/info/${id}`);
             return response.data;
         } catch (error) {
             this.handleError("getShowInfo", error, errorCallback);
@@ -47,7 +47,7 @@ export default class TVShowClient extends BaseClass {
 
     async getShowEpisodes(id, errorCallback) {
         try {
-            const response = await this.client.get(`/api/shows/episodes/${id}`);
+            const response = await this.client.get(`/shows/episodes/${id}`);
             return response.data;
         } catch (error) {
             this.handleError("getShowEpisodes", error, errorCallback);
@@ -56,7 +56,7 @@ export default class TVShowClient extends BaseClass {
 
     async getShowImages(id, errorCallback) {
         try {
-            const response = await this.client.get(`/api/shows/images/${id}`);
+            const response = await this.client.get(`/shows/images/${id}`);
             return response.data;
         } catch (error) {
             this.handleError("getShowImages", error, errorCallback);
@@ -65,7 +65,7 @@ export default class TVShowClient extends BaseClass {
 
     async getShowSeasons(id, errorCallback) {
         try {
-            const response = await this.client.get(`/api/shows/seasons/${id}`);
+            const response = await this.client.get(`/shows/seasons/${id}`);
             return response.data;
         } catch (error) {
             this.handleError("getShowSeasons", error, errorCallback);

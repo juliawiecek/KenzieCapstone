@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShowInfoResponse {
+public class ShowInfoData {
     @JsonProperty("name")
     private String name;
     @JsonProperty("genres")
@@ -20,7 +20,10 @@ public class ShowInfoResponse {
     @JsonProperty("id")
     private String id;
 
-    public ShowInfoResponse(String name, List<String> genres, Rating rating, Image image, String summary, String id) {
+    public ShowInfoData() {
+    }
+
+    public ShowInfoData(String name, List<String> genres, Rating rating, Image image, String summary, String id) {
         this.name = name;
         this.genres = genres;
         this.rating = rating;
@@ -77,6 +80,10 @@ public class ShowInfoResponse {
         @JsonProperty("average")
         private Double average;
 
+        public Rating(Double average) {
+            this.average = average;
+        }
+
         public Double getAverage() {
             return average;
         }
@@ -91,6 +98,11 @@ public class ShowInfoResponse {
         private String medium;
         @JsonProperty("original")
         private String original;
+
+        public Image(String medium, String original) {
+            this.medium = medium;
+            this.original = original;
+        }
 
         public String getMedium() {
             return medium;

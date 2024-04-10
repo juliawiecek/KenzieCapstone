@@ -3,31 +3,33 @@ package com.kenzie.capstone.service.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShowInfoResponse {
+public class EpisodeData {
     @JsonProperty("name")
     private String name;
-    @JsonProperty("genres")
-    private List<String> genres;
-    @JsonProperty("rating")
-    private Rating rating;
+    @JsonProperty("season")
+    private int season;
+    @JsonProperty("number")
+    private int number;
+    @JsonProperty("runtime")
+    private int runtime;
     @JsonProperty("image")
     private Image image;
     @JsonProperty("summary")
     private String summary;
-    @JsonProperty("id")
-    private String id;
 
-    public ShowInfoResponse(String name, List<String> genres, Rating rating, Image image, String summary, String id) {
+    public EpisodeData() {
+    }
+
+    public EpisodeData(String name, int season, int number, int runtime, Image image, String summary) {
         this.name = name;
-        this.genres = genres;
-        this.rating = rating;
+        this.season = season;
+        this.number = number;
+        this.runtime = runtime;
         this.image = image;
         this.summary = summary;
-        this.id = id;
     }
+
 
     public String getName() {
         return name;
@@ -37,53 +39,44 @@ public class ShowInfoResponse {
         this.name = name;
     }
 
-    public List<String> getGenres() {
-        return genres;
+    public int getSeason() {
+        return season;
     }
 
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
+    public void setSeason(int season) {
+        this.season = season;
     }
 
-    public String getSummary() {
-        return summary;
+    public int getNumber() {
+        return number;
     }
 
-    public String getId() {
-        return id;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public int getRuntime() {
+        return runtime;
     }
 
-    public Rating getRating() {
-        return rating;
-    }
-
-    public void setRating(Rating rating) {
-        this.rating = rating;
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
     }
 
     public Image getImage() {
         return image;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
-    public static class Rating {
-        @JsonProperty("average")
-        private Double average;
+    public String getSummary() {
+        return summary;
+    }
 
-        public Double getAverage() {
-            return average;
-        }
-
-        public void setAverage(Double average) {
-            this.average = average;
-        }
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public static class Image {

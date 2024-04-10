@@ -1,6 +1,7 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.capstone.service.TVShowService;
+import com.kenzie.capstone.service.client.TVShowLambdaServiceClient;
 import com.kenzie.capstone.service.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,48 +12,46 @@ import java.util.List;
 @RequestMapping("/shows")
 public class TVShowController {
 
-    private final TVShowService TVshowService;
+    private final TVShowLambdaServiceClient tvShowServiceClient;
 
-    public TVShowController(TVShowService TVshowService) {
-        this.TVshowService = TVshowService;
+    public TVShowController(TVShowLambdaServiceClient tvShowServiceClient) {
+        this.tvShowServiceClient = tvShowServiceClient;
     }
 
 
     @GetMapping("/popular")
-    public ResponseEntity<List<ShowInfoResponse>> getPopularShows() {
-        List<ShowInfoResponse> showInfoResponseList = TVshowService.getPopularShows();
-        System.out.println("Show Info Response List: " + showInfoResponseList);
-        return ResponseEntity.ok(showInfoResponseList);
+    public ResponseEntity<List<ShowInfoData>> getPopularShows() {
+        List<ShowInfoData> showInfoDataList = tvShowServiceClient.getPopularShows();
+        return ResponseEntity.ok(showInfoDataList);
     }
 
     @GetMapping("/search/{query}")
-    public ResponseEntity<List<ShowInfoResponse>> getShow(@PathVariable("query") String query) {
-        List<ShowInfoResponse> showInfoResponseList = TVshowService.getShow(query);
-        return ResponseEntity.ok(showInfoResponseList);
+    public ResponseEntity<List<ShowInfoData>> getShow(@PathVariable("query") String query) {
+        List<ShowInfoData> showInfoDataList = tvShowServiceClient.getSearchedShows(query);
+        return ResponseEntity.ok(showInfoDataList);
     }
 
     @GetMapping("/info/{id}")
-    public ResponseEntity<ShowInfoResponse> getShowInfo(@PathVariable("id") String id) {
-        ShowInfoResponse showInfoResponse = TVshowService.getShowInfo(id);
-        return ResponseEntity.ok(showInfoResponse);
+    public ResponseEntity<ShowInfoData> getShowInfo(@PathVariable("id") String id) {
+        ShowInfoData showInfoData = tvShowServiceClient.getShowInfo(id);
+        return ResponseEntity.ok(showInfoData);
     }
 
-
     @GetMapping("/episodes/{id}")
-    public ResponseEntity<List<EpisodeResponse>> getShowEpisodesForSeason(@PathVariable("id") String id) {
-        List<EpisodeResponse> response = TVshowService.getShowEpisodesForSeason(id);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<List<EpisodeData>> getShowEpisodesForSeason(@PathVariable("id") String id) {
+        List<EpisodeData> episodeDataList = tvShowServiceClient.getEpisodes(id);
+        return ResponseEntity.ok(episodeDataList);
     }
 
     @GetMapping("/images/{id}")
-    public ResponseEntity<List<ImageResponse>> getShowImages(@PathVariable("id") String id) {
-        List<ImageResponse> response = TVshowService.getShowImages(id);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<List<ImageData>> getShowImages(@PathVariable("id") String id) {
+        List<ImageData> imageDataList = tvShowServiceClient.getImages(id);
+        return ResponseEntity.ok(imageDataList);
     }
 
     @GetMapping("/seasons/{id}")
-    public ResponseEntity<List<SeasonsResponse>> getShowSeasons(@PathVariable("id") String id) {
-        List<SeasonsResponse> response = TVshowService.getShowSeasons(id);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<List<SeasonsData>> getShowSeasons(@PathVariable("id") String id) {
+        List<SeasonsData> seasonsDataList = tvShowServiceClient.getSeasons(id);
+        return ResponseEntity.ok(seasonsDataList);
     }
 }
