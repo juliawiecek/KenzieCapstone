@@ -62,7 +62,7 @@ public class JsonStringToResponseConverter {
                 JsonObject ratingJson = show.has("rating") && !show.get("rating").isJsonNull() ? show.get("rating").getAsJsonObject() : null;
                 JsonObject imageJson = show.has("image") && !show.get("image").isJsonNull() ? show.get("image").getAsJsonObject() : null;
                 String summary = show.has("summary") && !show.get("summary").isJsonNull() ? show.get("summary").getAsString() : null;
-                Integer id = show.has("id") && !show.get("id").isJsonNull() ? show.get("id").getAsInt() : null;
+                String id = show.has("id") && !show.get("id").isJsonNull() ? String.valueOf(show.get("id")) : null;
 
                 ShowInfoResponse.Rating ratingObject = null;
                 ShowInfoResponse.Image imageObject = null;

@@ -8,12 +8,12 @@ public class SeasonsData {
     @JsonProperty("number")
     private int number;
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     public SeasonsData() {
     }
 
-    public SeasonsData(int number, int id) {
+    public SeasonsData(int number, String id) {
         this.number = number;
         this.id = id;
     }
@@ -26,11 +26,11 @@ public class SeasonsData {
         this.number = number;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

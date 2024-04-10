@@ -18,9 +18,9 @@ public class ShowInfoResponse {
     @JsonProperty("summary")
     private String summary;
     @JsonProperty("id")
-    private int id;
+    private String id;
 
-    public ShowInfoResponse(String name, List<String> genres, Rating rating, Image image, String summary, int id) {
+    public ShowInfoResponse(String name, List<String> genres, Rating rating, Image image, String summary, String id) {
         this.name = name;
         this.genres = genres;
         this.rating = rating;
@@ -49,7 +49,7 @@ public class ShowInfoResponse {
         return summary;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -69,7 +69,7 @@ public class ShowInfoResponse {
         return image;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -18,12 +18,12 @@ public class ShowInfoData {
     @JsonProperty("summary")
     private String summary;
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     public ShowInfoData() {
     }
 
-    public ShowInfoData(String name, List<String> genres, Rating rating, Image image, String summary, int id) {
+    public ShowInfoData(String name, List<String> genres, Rating rating, Image image, String summary, String id) {
         this.name = name;
         this.genres = genres;
         this.rating = rating;
@@ -52,7 +52,7 @@ public class ShowInfoData {
         return summary;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -72,13 +72,17 @@ public class ShowInfoData {
         return image;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public static class Rating {
         @JsonProperty("average")
         private Double average;
+
+        public Rating(Double average) {
+            this.average = average;
+        }
 
         public Double getAverage() {
             return average;
@@ -94,6 +98,11 @@ public class ShowInfoData {
         private String medium;
         @JsonProperty("original")
         private String original;
+
+        public Image(String medium, String original) {
+            this.medium = medium;
+            this.original = original;
+        }
 
         public String getMedium() {
             return medium;
