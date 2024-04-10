@@ -1,8 +1,10 @@
 package com.kenzie.appserver.controller;
+import com.kenzie.appserver.Exceptions.CommentNotFoundException;
 import com.kenzie.appserver.controller.model.CommentResponse;
 import com.kenzie.appserver.controller.model.CreateCommentRequest;
 import com.kenzie.appserver.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,5 +65,8 @@ public class CommentController {
         CommentResponse likedComment = commentService.likeComment(commentId, likes);
         return ResponseEntity.ok(likedComment);
     }
-
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<String> handleCommentNotFound(CommentNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
 }

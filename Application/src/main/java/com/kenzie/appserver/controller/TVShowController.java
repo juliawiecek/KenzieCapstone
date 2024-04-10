@@ -1,8 +1,10 @@
 package com.kenzie.appserver.controller;
 
+import com.kenzie.appserver.Exceptions.ShowNotFoundException;
 import com.kenzie.capstone.service.TVShowService;
 import com.kenzie.capstone.service.client.TVShowLambdaServiceClient;
 import com.kenzie.capstone.service.model.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -56,4 +58,9 @@ public class TVShowController {
         List<SeasonsData> seasonsDataList = tvShowServiceClient.getSeasons(id);
         return ResponseEntity.ok(seasonsDataList);
     }
+    @ExceptionHandler(ShowNotFoundException.class)
+    public ResponseEntity<String> handleShowNotFound(ShowNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
 }

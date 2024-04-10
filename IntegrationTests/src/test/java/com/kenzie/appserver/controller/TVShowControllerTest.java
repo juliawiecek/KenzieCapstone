@@ -54,9 +54,10 @@ public class TVShowControllerTest {
                 "Description", "12"));
         given(showService.getSearchedShows("Game of Thrones")).willReturn(shows);
 
-        mockMvc.perform(get("/shows/Game of Thrones").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/shows/search/Game of Thrones").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
 
     @Test
     void getShowInfo_HappyPath() throws Exception {
